@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <title> Flixy tube</title>
+    <style>
+        /* Estilos para la barra de navegación */
+        .header {
+            background-color: #0e0d0d;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: center;
+            
+            
+        }
+
+        .logo img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .secciones-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            width: 0;
+            opacity: 0;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        .search-container:hover .search-input,
+        .search-input:focus {
+            width: 210px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ee0b0b;
+        }
+
+        /* Estilos para las sugerencias de búsqueda */
+        .search-results {
+            position: absolute;
+            top: 130%;
+            left: 0;
+            width: 210px;
+            background-color: rgba(43, 41, 41, 0.575);
+            border: 1px solid #3b313179;
+            border-top: none;
+            display: none;
+            box-shadow: 0 2px 4px rgba(168, 166, 166, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            
+        }
+
+        .search-results ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-results li:hover {
+            background-color: rgba(255, 0, 0, 0.534);
+        }
+
+        .search-results a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .menu-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .menu-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(8, 8, 8, 0.452);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #e50914;
+        }
+
+        .item {
+            margin: 1px;
+            border-radius: 0;
+        }
+
+        .item-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6D37VPPT8"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-W6D37VPPT8');
+</script>
+</head>
+<body>
+    <!-- Header -->
+    <main>            
+        <div class="content-all">
+            <header class="header">
+                <button class="secciones-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <a href="Flixy tube.html"><img src="img/Up.gif" alt="Logo de películas"></a>
+                </div>
+               
+                                
+
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu-container').style.display = 'flex';
+        }
+
+        function closeMenu() {
+            document.querySelector('.menu-container').style.display = 'none';
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchItems = searchResults.getElementsByTagName('li');
+
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            let hasResults = false;
+            if (filter) {
+                for (let i = 0; i < searchItems.length; i++) {
+                    const txtValue = searchItems[i].textContent || searchItems[i].innerText;
+                    if (txtValue.toLowerCase().includes(filter)) {
+                        searchItems[i].style.display = "";
+                        hasResults = true;
+                    } else {
+                        searchItems[i].style.display = "none";
+                    }
+                }
+            } else {
+                for (let i = 0; i < searchItems.length; i++) {
+                    searchItems[i].style.display = "none";
+                }
+            }
+            searchResults.style.display = hasResults ? "block" : "none";
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.search-container')) {
+                searchResults.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- Mobile Menu Container -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-background" onclick="toggleMenu()"></div>
+                <div class="menu-content">
+                    <ul class="menu">
+                        <li><a href="inicio.html">Inicio</a></li>
+                        <li><a href="Peliculas.html">Películas</a></li>
+                        <li><a href="Comedia.html">Comedia</a></li>
+                        <li><a href="terror.html">Terror</a></li>
+                        <li><a href="infantil.html">Infantil</a></li>
+                        <li><a href="">▬▬▬▬▬▬</a></li>
+                        <li><a href="Flixy tube.html">Flixy Tube</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-input");
+            const searchResults = document.querySelector(".search-results");
+
+            searchInput.addEventListener("input", function() {
+                const inputValue = this.value.toLowerCase().trim();
+                const movieLinks = searchResults.querySelectorAll("a");
+
+                if (inputValue === "") {
+                    searchResults.style.display = "none";
+                    return;
+                }
+
+                movieLinks.forEach(function(link) {
+                    const movieTitle = link.textContent.toLowerCase();
+                    if (movieTitle.includes(inputValue)) {
+                        link.style.display = "block";
+                    } else {
+                        link.style.display = "none";
+                    }
+                    
+                });
+
+                searchResults.style.display = "block";
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #141414;
+            
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .header img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        #search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #query {
+            width: 300px;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            background: linear-gradient(45deg, red, rgba(42, 42, 42, 0.094));
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #f40612;
+        }
+        #video-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .video-item {
+            width: 200px;
+            cursor: pointer;
+        }
+        .video-item img {
+            width: 100%;
+            border-radius: 4px;
+            loading: lazy;
+        }
+        #player {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 27px;
+            cursor: pointer;
+            background: linear-gradient(45deg, red, rgb(42, 42, 42));
+            padding: 8px 12px;
+            border-radius: 15%;
+        }
+        .close-button:hover {
+            color: #fff;
+        }
+        .video-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 79vh;
+            max-width: 800px;
+            max-height: 600px;
+            
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #comment-button {
+            margin-top: 557px;
+            padding: 10px;
+            border: none;
+            background: linear-gradient(45deg, rgb(70, 70, 69), rgb(70, 70, 69));
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        
+        }
+        #suggested-videos {
+            margin-top: 20px;
+            width: 100%;
+            color: #ffffff;
+        }
+        #suggested-video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 20px;
+            color: #fff;
+        }
+        @media only screen and (max-width: 600px) {
+            #suggested-video-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .loader {
+            border: 16px solid #4b4b4b;
+            border-radius: 50%;
+            border-top: 16px solid #e50914;
+            width: 90px;
+            height: 90px;
+            animation: spin 2s linear infinite;
+            margin: 150px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media only screen and (max-width: 500px) {
+            .video-column {
+                flex-basis: 100%;
+            }
+        }
+        @media only screen and (max-width: 600px) {
+            .video-container {
+                width: 95vw;
+                height: 45vh;
+                max-width: none;
+                max-height: none;
+            }
+            .video-container h3 {
+                display: none;
+            }
+        }
+
+        .search-results{
+        color: #fff;
+    }
+    </style>
+</head>
+<body>
+    
+    <form id="search-form">
+        <input type="text" id="query" placeholder="Buscar videos..." required>
+        <button type="submit">Buscar</button>
+    </form>
+    <div id="video-list"></div>
+    <div id="player">
+        <span class="close-button" onclick="closePlayer()">&times;</span>
+        <div class="video-container">
+            <iframe id="video-iframe" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+        
+    </div>
+    
+    <div id="suggested-videos">
+        <h2>Videos Top</h2>
+        <div id="suggested-video-list"></div>
+        <div id="loader" class="loader"></div>
+    </div>
+
+    <script>
+        const API_KEY =  
+     'AIzaSyCSz_OayZ15wafV2CsOtwVzLPp5q5UMT6Q'; 
+     'AIzaSyD_v2cJ3kMuxYijxDUnNgKe24Ns0g61Kxc'; 
+     'AIzaSyAvX-tPSuqBElA4IepnOqXLJ2_EOHN7lJU'; 
+     'AIzaSyB-sk4eICqV5tBJIaubuVIvoQMkvc3nPik';
+     
+     
+        const GEO_API_KEY = 
+        '74ca0e5fe51738'; 
+        '552daf4bd50c37';
+
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const query = document.getElementById('query').value;
+            searchYouTube(query);
+        });
+
+        function searchYouTube(query) {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=36&key=${API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    const videoList = document.getElementById('video-list');
+                    videoList.innerHTML = '';
+                    data.items.forEach(item => {
+                        const videoItem = document.createElement('div');
+                        videoItem.classList.add('video-item');
+                        videoItem.innerHTML = `
+                            <img src="${item.snippet.thumbnails.medium.url}" alt="${item.snippet.title}">
+                            <div class="video-title">${item.snippet.title}</div>
+                            <div class="video-channel">${item.snippet.channelTitle}</div>
+                        `;
+                        videoItem.addEventListener('click', () => {
+                            loadVideo(item.id.videoId);
+                        });
+                        videoList.appendChild(videoItem);
+                    });
+                    loader.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    loader.style.display = 'none';
+                });
+        }
+
+        function loadVideo(videoId) {
+            const player = document.getElementById('player');
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0`;
+            player.style.display = 'block';
+            loadComments(videoId);
+        }
+
+        function closePlayer() {
+            const player = document.getElementById('player');
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = '';
+            player.style.display = 'none';
+            closeComments();
+        
+        }
+
+        function showComments() {
+            const commentsContainer = document.getElementById('comments-container');
+            const commentButton = document.getElementById('comment-button');
+            const commentModal = document.getElementById('comment-modal');
+
+            commentsContainer.style.display = 'block';
+            commentButton.style.display = 'none';
+            commentModal.style.display = 'flex';
+            
+        }
+
+        function closeComments() {
+            const commentsContainer = document.getElementById('comments-container');
+            const commentButton = document.getElementById('comment-button');
+            const commentModal = document.getElementById('comment-modal');
+
+            commentsContainer.style.display = 'none';
+            commentButton.style.display = 'block';
+            commentModal.style.display = 'none';
+        }
+
+        function loadSuggestedVideos() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+
+            fetch(`https://ipinfo.io/json?token=${GEO_API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    const country = data.country;
+                    fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=${country}&maxResults=36&key=${API_KEY}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const suggestedVideoList = document.getElementById('suggested-video-list');
+                            suggestedVideoList.innerHTML = '';
+                            const shuffledVideos = data.items.sort(() => 0.5 - Math.random());
+                            const selectedVideos = shuffledVideos.slice(0, 36);
+                            selectedVideos.forEach(item => {
+                                const suggestedVideoItem = document.createElement('div');
+                                suggestedVideoItem.classList.add('video-item');
+                                suggestedVideoItem.innerHTML = `
+                                    <img src="${item.snippet.thumbnails.medium.url}" alt="${item.snippet.title}" loading="lazy">
+                                    <div class="video-title">${item.snippet.title}</div>
+                                    <div class="video-channel">${item.snippet.channelTitle}</div>
+                                `;
+                                suggestedVideoItem.addEventListener('click', () => {
+                                    loadVideo(item.id);
+                                });
+                                suggestedVideoList.appendChild(suggestedVideoItem);
+                            });
+                            loader.style.display = 'none';
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            loader.style.display = 'none';
+                        });
+                })
+                .catch(error => {
+                    console.error('Error al obtener la ubicación:', error);
+                    loader.style.display = 'none';
+                });
+        }
+
+        window.onload = loadSuggestedVideos;
+        setInterval(loadSuggestedVideos, 10800000);
+    </script>
+</body>
+</html>
+
+</body>
+</html>

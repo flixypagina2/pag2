@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <title> anine</title>
+    <style>
+        /* Estilos para la barra de navegación */
+        .header {
+            background-color: #0e0d0d;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .secciones-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            width: 0;
+            opacity: 0;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        .search-container:hover .search-input,
+        .search-input:focus {
+            width: 210px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ee0b0b;
+        }
+
+        /* Estilos para las sugerencias de búsqueda */
+        .search-results {
+            position: absolute;
+            top: 130%;
+            left: 0;
+            width: 210px;
+            background-color: rgba(43, 41, 41, 0.575);
+            border: 1px solid #3b313179;
+            border-top: none;
+            display: none;
+            box-shadow: 0 2px 4px rgba(168, 166, 166, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            
+        }
+
+        .search-results ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-results li:hover {
+            background-color: rgba(255, 0, 0, 0.534);
+        }
+
+        .search-results a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .menu-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .menu-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(8, 8, 8, 0.452);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #e50914;
+        }
+
+        .item {
+            margin: 1px;
+            border-radius: 0;
+        }
+
+        .item-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+         /* Estilos de la paginación */
+         .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination button {
+            background-color: #e2232c00;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #ff0404;
+            transform: translateY(-3px);
+        }
+
+        .pagination button:focus {
+            outline: none;
+        }
+
+        /* Estilo para el número de página actual */
+        .current-page {
+            color: #e50914;
+            font-weight: bold;
+        }
+
+        /* Estilo para los iconos */
+        .pagination button i {
+            margin-right: 5px;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Header -->
+    <main>            
+        <div class="content-all">
+            <header class="header">
+                <button class="secciones-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <a href="inicio.html"><img src="img/Flixy-logo.gif" alt="Logo de películas"></a>
+                </div>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput">
+                    <i class="fas fa-search search-icon"></i>
+                    <div class="search-results" id="searchResults">
+                        <ul>
+                            <li><a href="peliculas/Ip man 4.html">Ip man 4 </a></li>
+                            
+
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu-container').style.display = 'flex';
+        }
+
+        function closeMenu() {
+            document.querySelector('.menu-container').style.display = 'none';
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchItems = searchResults.getElementsByTagName('li');
+
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            let hasResults = false;
+            if (filter) {
+                for (let i = 0; i < searchItems.length; i++) {
+                    const txtValue = searchItems[i].textContent || searchItems[i].innerText;
+                    if (txtValue.toLowerCase().includes(filter)) {
+                        searchItems[i].style.display = "";
+                        hasResults = true;
+                    } else {
+                        searchItems[i].style.display = "none";
+                    }
+                }
+            } else {
+                for (let i = 0; i < searchItems.length; i++) {
+                    searchItems[i].style.display = "none";
+                }
+            }
+            searchResults.style.display = hasResults ? "block" : "none";
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.search-container')) {
+                searchResults.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- Mobile Menu Container -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-background" onclick="toggleMenu()"></div>
+                <div class="menu-content">
+                    <ul class="menu">
+                        <li><a href="inicio.html">Inicio</a></li>
+                        <li><a href="Peliculas.html">Películas</a></li>
+                        <li><a href="Comedia.html">Comedia</a></li>
+                        <li><a href="terror.html">Terror</a></li>
+                        <li><a href="infantil.html">Infantil</a></li>
+                        <li><a href="Series.html"></a></li>
+                        <li><a href="Anime.html"></a></li>
+                        <li><a href="Doramas.html"></a></li>
+                        <li><a href="historas.html"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-input");
+            const searchResults = document.querySelector(".search-results");
+
+            searchInput.addEventListener("input", function() {
+                const inputValue = this.value.toLowerCase().trim();
+                const movieLinks = searchResults.querySelectorAll("a");
+
+                if (inputValue === "") {
+                    searchResults.style.display = "none";
+                    return;
+                }
+
+                movieLinks.forEach(function(link) {
+                    const movieTitle = link.textContent.toLowerCase();
+                    if (movieTitle.includes(inputValue)) {
+                        link.style.display = "block";
+                    } else {
+                        link.style.display = "none";
+                    }
+                    
+                });
+
+                searchResults.style.display = "block";
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    <div class="container">
+
+        <div class="item">
+            <a href="peliculas/Ip man 4.html"><img src="https://image.tmdb.org/t/p/original/j1rbZPqBiZX3NLWU5q1TH13v6BL.jpg" alt="" class="item-img"></a>
+        </div>
+        
+	</div> 
+        
+        <!-- Paginación -->
+    <div class="pagination">
+        <button onclick="previousPage()" class="netflix-button"><i class="fas fa-chevron-left"></i> </button>
+        <span class="current-page" id="currentPage">1</span> - <span class="total-pages" id="totalPages">1</span>
+        <button onclick="nextPage()" class="netflix-button"> <i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        let moviesPerPage = 50; // Número de películas por página por defecto
+        let currentPage = 1; // Página actual, inicializada en 1
+
+        // Función para mostrar las películas de la página actual
+        function showMovies(page) {
+            const items = document.querySelectorAll('.item');
+            const startIndex = (page - 1) * moviesPerPage;
+            const endIndex = page * moviesPerPage;
+
+            items.forEach((item, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Función para ir a la página anterior
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                document.getElementById('currentPage').textContent = currentPage;
+                showMovies(currentPage);
+            }
+        }
+
+        // Función para ir a la página siguiente
+        function nextPage() {
+            const totalMovies = document.querySelectorAll('.item').length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
+
+            if (currentPage < totalPages) {
+                currentPage++;
+                document.getElementById('currentPage').textContent = currentPage;
+                showMovies(currentPage);
+            }
+        }
+
+        // Mostrar las películas de la primera página al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ajustar el número de películas por página en dispositivos móviles
+            if (window.innerWidth <= 768) {
+                moviesPerPage = 52;
+            }
+
+            showMovies(currentPage);
+            const totalMovies = document.querySelectorAll('.item').length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
+            document.getElementById('totalPages').textContent = totalPages;
+        });
+
+        // Reajustar el número de películas por página cuando la ventana cambie de tamaño
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 768) {
+                moviesPerPage = 52;
+            } else {
+                moviesPerPage = 40;
+            }
+
+            showMovies(currentPage);
+            const totalMovies = document.querySelectorAll('.item').length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
+            document.getElementById('totalPages').textContent = totalPages;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <title>terror </title>
+    <style>
+        /* Estilos para la barra de navegación */
+        .header {
+            background-color: #0e0d0d;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .secciones-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            width: 0;
+            opacity: 0;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        .search-container:hover .search-input,
+        .search-input:focus {
+            width: 210px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ee0b0b;
+        }
+
+        /* Estilos para las sugerencias de búsqueda */
+        .search-results {
+            position: absolute;
+            top: 130%;
+            left: 0;
+            width: 210px;
+            background-color: rgba(43, 41, 41, 0.575);
+            border: 1px solid #3b313179;
+            border-top: none;
+            display: none;
+            box-shadow: 0 2px 4px rgba(168, 166, 166, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            
+        }
+
+        .search-results ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-results li:hover {
+            background-color: rgba(255, 0, 0, 0.534);
+        }
+
+        .search-results a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .menu-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .menu-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(8, 8, 8, 0.452);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #e50914;
+        }
+
+        .item {
+            margin: 1px;
+            border-radius: 0;
+        }
+
+        .item-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+         /* Estilos de la paginación */
+         .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination button {
+            background-color: #e2232c00;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #ff0404;
+            transform: translateY(-3px);
+        }
+
+        .pagination button:focus {
+            outline: none;
+        }
+
+        /* Estilo para el número de página actual */
+        .current-page {
+            color: #e50914;
+            font-weight: bold;
+        }
+
+        /* Estilo para los iconos */
+        .pagination button i {
+            margin-right: 5px;
+        }
+        
+        .total-pages{
+        color: #ffffff;
+            font-weight: bold;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Header -->
+    <main>            
+        <div class="content-all">
+            <header class="header">
+                <button class="secciones-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <a href="inicio.html"><img src="img/Flixy-logo.gif" alt="Logo de películas"></a>
+                </div>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput">
+                    <i class="fas fa-search search-icon"></i>
+                    <div class="search-results" id="searchResults">
+                        <ul>
+
+			    <li><a href="Terror/Nadie duerme en el bosque esta noche.html">Nadie duerme en el bosque esta noche </a></li>
+                            <li><a href="Terror/Historias de miedo para contar en la oscuridad.html">Historias de miedo para contar en la oscuridad</a></li>
+                            <li><a href="Terror/La leyenda del lobo de la montaña.html">La leyenda del lobo de la montaña</a></li>
+                            <li><a href="Terror/Al 3er día.html">Al 3er día</a></li>
+                            <li><a href="Terror/La forma del miedo.html">La forma del miedo</a></li>
+                            <li><a href="Terror/Dentro de La Oscuridad.html">Dentro de La Oscuridad</a></li>
+                            <li><a href="Terror/Un Siniestro Cuento de Navidad.html">Un Siniestro Cuento de Navidad</a></li>
+                            <li><a href="Terror/El demonio neón.html">El demonio neón </a></li>
+                            <li><a href="Terror/Boogeyman Tu miedo es real.html">Boogeyman: Tu miedo es real </a></li>
+                            <li><a href="Terror/Hatching Cría siniestra.html">Terror/Hatching Cría siniestra </a></li>
+                            <li><a href="Terror/Boogeyman El nombre del miedo.html">Boogeyman: El nombre del miedo </a></li>
+                            <li><a href="Terror/Escalera al infierno.html">Escalera al infierno </a></li>
+                            <li><a href="Terror/la Bruja de Blair.html">la Bruja de Blair </a></li>
+                            <li><a href="Terror/Boogeyman 2.html">Boogeyman 2 </a></li>
+                            <li><a href="Terror/Slender Man.html">Boogeyman 2 </a></li>
+                            <li><a href="Terror/Arrástrame al infierno.html">Arrástrame al infierno </a></li>
+                            <li><a href="Terror/Posesion infernal.html">Posesion infernal </a></li>
+                            <li><a href="Terror/Abigail.html">Abigail </a></li>
+                            <li><a href="Terror/La monja 2.html">La monja 2 </a></li>
+                            <li><a href="Terror/El exorcista del papa.html">El exorcista del papa </a></li>
+                            <li><a href="Terror/Viernes negro.html">Viernes negro </a></li>
+                            <li><a href="Terror/Winnie the Pooh Sangre y Miel.html">Winnie the Pooh Sangre y Miel </a></li>
+                            <li><a href="Terror/Hablame.html">Hablame </a></li>
+                            <li><a href="Terror/El bufón.html">El bufón </a></li>
+                            <li><a href="Terror/Juega o muere.html">Juega o muere</a></li>
+                            <li><a href="Terror/insidius 5.html">insidius 5</a></li>
+                            <li><a href="Terror/Hermana muerte.html">Hermana muerte</a></li>
+                            <li><a href="Terror/Aguas siniestras.html">Aguas siniestras</a></li>
+                            <li><a href="Terror/Tin y tina.html">Tin y tina</a></li>
+                            <li><a href="Terror/Come play.html">Come play</a></li>
+                            <li><a href="Terror/fredys.html">fredys</a></li>
+                            <li><a href="Terror/scream 6.html">scream 6</a></li>
+                            <li><a href="Terror/hay algo mal con los niños.html">hay algo mal con los niños</a></li>
+                            <li><a href="Terror/halloween la noche final.html">halloween la noche final</a></li>
+                            <li><a href="Terror/Hellblazers Infierno en la Tierra.html">Hellblazers Infierno en la Tierra</a></li>
+                            <li><a href="Terror/Ofrenda Al Demonio.html">Ofrenda Al Demonio</a></li>
+                            <li><a href="Terror/Escape room 2.html">Escape room 2</a></li>
+                            <li><a href="Terror/Brightburn Hijo De La Oscuridad.html">Brightburn Hijo De La Oscuridad</a></li>
+                            <li><a href="Terror/Z quiere jugar.html">Z quiere jugar</a></li>
+                            <li><a href="Terror/El grito.html">El grito</a></li>
+                            <li><a href="Terror/Viraliza o Muere.html">Viraliza o Muere</a></li>
+                            <li><a href="Terror/It.html">It</a></li>
+                            <li><a href="Terror/It 2.html">It 2</a></li>
+                            <li><a href="Terror/La crucifixión.html">La crucifixión</a></li>
+                            <li><a href="Terror/The Possession (El origen del mal).html">The Possession (El origen del mal)</a></li>
+                            <li><a href="Terror/Espiritus oscuros.html">Espiritus oscuros</a></li>
+                            <li><a href="Terror/Los ojos del mal.html">Los ojos del mal</a></li>
+                            <li><a href="Terror/Sleep El mal no duerme.html">Sleep El mal no duerme</a></li>
+                            <li><a href="Terror/Los fantasmas del lunes.html">Los fantasmas del lunes</a></li>
+                            <li><a href="Terror/Jack en la caja maldita 3 - El Ascenso.html">Jack en la caja maldita 3 - El Ascenso</a></li>
+                            <li><a href="Terror/Hostel 3 De vuelta al horror.html">Hostel 3 De vuelta al horror</a></li>
+                            <li><a href="Terror/Hostel.html">Hostal</a></li>
+                            <li><a href="Terror/El experimento fantasma.html">El experimento fantasma</a></li>
+                            <li><a href="Terror/[REC]⁴ Apocalipsis.html">[REC] 4 Apocalipsis</a></li>
+                            <li><a href="Terror/Auxilio.html">Auxilio</a></li>
+                            <li><a href="Terror/El Payaso de Green Bay.html">El Payaso de Green Bay</a></li>
+                            <li><a href="Terror/Masacre en el tren de la muerte.html">Masacre en el tren de la muerte</a></li>
+                            <li><a href="Terror/No vallas a colgar.html">No vallas a colgar</a></li>
+                            <li><a href="Terror/Jeepers creepers 3.html">Jeepers creepers 3</a></li>
+                            <li><a href="Terror/El juego del ascensor.html">El juego del ascensor</a></li>
+                            <li><a href="Terror/A Haunting in Ravenwood.html">A Haunting in Ravenwood</a></li>
+                            <li><a href="Terror/Zona mortal.html">Zona mortal</a></li>
+                            <li><a href="Terror/Poltergeist Juegos diabólicos.html">Poltergeist: Juegos diabólicos</a></li>
+                            <li><a href="Terror/El hombre de mis pesadillas.html">El hombre de mis pesadillas</a></li>
+                            <li><a href="Terror/Campton Manor.html">Campton Manor</a></li>
+                            <li><a href="Terror/Babadook.html">Babadook</a></li>
+                            <li><a href="Terror/Tarot de la muerte.html">Tarot de la muerte</a></li>
+                            <li><a href="Terror/El juego de la muerte.html">El juego de la muerte</a></li>
+                            <li><a href="Terror/La primera profecía.html">La primera profecía</a></li>
+                            <li><a href="Terror/Cuarentena.html">Cuarentena</a></li>
+                            <li><a href="Terror/La casa embrujada.html">La casa embrujada</a></li>
+                            <li><a href="Terror/La ermita.html">La ermita</a></li>
+                            <li><a href="Terror/Arácnidos.html">Arácnidos</a></li>
+                            <li><a href="Terror/Los Extraños Capítulo 1.html">Los Extraños Capítulo 1</a></li>
+                            <li><a href="Terror/No hables con extraños.html">No hables con extraños</a></li>
+                            <li><a href="Terror/Spirit Doll.html">Spirit Doll</a></li>
+                            <li><a href="Terror/Destino Final 5.html">Destino Final 5</a></li>
+                            <li><a href="Terror/Vampiras The Brides.html">Vampiras The Brides</a></li>
+                            <li><a href="Terror/El beso del demonio.html">El beso del demonio</a></li>
+                            <li><a href="Terror/Burga.html">El beso del demonio</a></li>
+                            <li><a href="Terror/¿Eres tú, papá.html">¿Eres tú, papá? </a></li>
+			    <li><a href="Terror/La Maldición de Savannah.html">La Maldición de Savannah </a></li>
+                            <li><a href="Terror/La melodía del diablo.html">La partitura </a></li>
+                            <li><a href="Terror/La Otra Cara de Dorian.html">La Otra Cara de Dorian </a></li>
+			    <li><a href="Terror/15 Cameras.html">15 Cameras </a></li>
+                            <li><a href="Terror/Bloodline Killer.html">Bloodline Killer </a></li>
+                            <li><a href="Terror/Inmaculada.html">Inmaculada </a></li>
+                            <li><a href="Terror/Alicia en el país de las pesadillas.html">Alicia en el país de las pesadillas </a></li>
+                            <li><a href="Terror/Susurros Mortales.html"> Susurros Mortales </a></li>
+                            <li><a href="Terror/Baghead Contacto Con La Muerte.html"> Baghead Contacto Con La Muerte </a></li>
+			   <li><a href="Terror/La Bruja de Hielo.html">La Bruja de Hielo  </a></li>
+			   <li><a href="Terror/Ritos ocultos.html">  Ritos ocultos  </a></li>
+                            <li><a href="Terror/Juicio al diablo.html">  Juicio al diablo  </a></li>
+                            <li><a href="Terror/Turno maldito.html">  Turno maldito  </a></li>
+			    <li><a href="Terror/Float.html"> #Float  </a></li>
+                            <li><a href="Terror/13 exorcismos.html"> 13 exorcismos </a></li>
+                            <li><a href="Terror/Matriarca.html"> Matriarca </a></li>
+                            <li><a href="Terror/El vientre del mal.html"> El vientre del mal </a></li>
+                            <li><a href="Terror/Grimcutty Asesino implacable.html"> Grimcutty Asesino implacable </a></li>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu-container').style.display = 'flex';
+        }
+
+        function closeMenu() {
+            document.querySelector('.menu-container').style.display = 'none';
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchItems = searchResults.getElementsByTagName('li');
+
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            let hasResults = false;
+            if (filter) {
+                for (let i = 0; i < searchItems.length; i++) {
+                    const txtValue = searchItems[i].textContent || searchItems[i].innerText;
+                    if (txtValue.toLowerCase().includes(filter)) {
+                        searchItems[i].style.display = "";
+                        hasResults = true;
+                    } else {
+                        searchItems[i].style.display = "none";
+                    }
+                }
+            } else {
+                for (let i = 0; i < searchItems.length; i++) {
+                    searchItems[i].style.display = "none";
+                }
+            }
+            searchResults.style.display = hasResults ? "block" : "none";
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.search-container')) {
+                searchResults.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- Mobile Menu Container -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-background" onclick="toggleMenu()"></div>
+                <div class="menu-content">
+                    <ul class="menu">
+                        <li><a href="inicio.html">Inicio</a></li>
+                        <li><a href="Peliculas.html">Películas</a></li>
+                        <li><a href="Comedia.html">Comedia</a></li>
+                        <li><a href="terror.html">Terror</a></li>
+                        <li><a href="infantil.html">Infantil</a></li>
+                        <li><a href="">▬▬▬▬▬▬</a></li>
+                        <li><a href="Flixy tube.html">Flixy Tube</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-input");
+            const searchResults = document.querySelector(".search-results");
+
+            searchInput.addEventListener("input", function() {
+                const inputValue = this.value.toLowerCase().trim();
+                const movieLinks = searchResults.querySelectorAll("a");
+
+                if (inputValue === "") {
+                    searchResults.style.display = "none";
+                    return;
+                }
+
+                movieLinks.forEach(function(link) {
+                    const movieTitle = link.textContent.toLowerCase();
+                    if (movieTitle.includes(inputValue)) {
+                        link.style.display = "block";
+                    } else {
+                        link.style.display = "none";
+                    }
+                    
+                });
+
+                searchResults.style.display = "block";
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    <div class="container">
+	<div class="item">
+            <a href="Terror/Grimcutty Asesino implacable.html"><img src="Multimedia/Terror/Grimcutty Asesino implacable.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El vientre del mal.html"><img src="Multimedia/Terror/El vientre del mal.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Matriarca.html"><img src="Multimedia/Terror/Matriarca.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Float.html"><img src="Multimedia/Terror/Float.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/13 exorcismos.html"><img src="Multimedia/Terror/13 exorcismos.jpg" alt="" class="item-img"></a>
+        </div>
+
+	<div class="item">
+            <a href="Terror/Ritos ocultos.html"><img src="Multimedia/Terror/Ritos ocultos.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Juicio al diablo.html"><img src="Multimedia/Terror/Juicio al diablo.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Turno maldito.html"><img src="Multimedia/Terror/Turno maldito.jpg" alt="" class="item-img"></a>
+        </div>
+
+	<div class="item">
+            <a href="Terror/La Bruja de Hielo.html"><img src="Multimedia/Terror/La Bruja de Hielo.jpg" alt="" class="item-img"></a>
+        </div>
+	<div class="item">
+            <a href="Terror/Baghead Contacto Con La Muerte.html"><img src="Multimedia/Terror/Baghead Contacto Con La Muerte.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Alicia en el país de las pesadillas.html"><img src="Multimedia/Terror/Alicia en el país de las pesadillas.jpg" alt="" class="item-img"></a>
+        </div>
+
+        <div class="item">
+            <a href="Terror/Inmaculada.html"><img src="Multimedia/Terror/Inmaculada.jpg" alt="" class="item-img"></a>
+        </div>
+
+        <div class="item">
+            <a href="Terror/15 Cameras.html"><img src="Multimedia/Terror/15 Cameras.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Bloodline Killer.html"><img src="Multimedia/Terror/Bloodline Killer.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Susurros Mortales.html"><img src="Multimedia/Terror/Susurros Mortales.jpg" alt="" class="item-img"></a>
+        </div>
+        
+	<div class="item">
+            <a href="Terror/Nadie duerme en el bosque esta noche.html"><img src="Multimedia/Terror/Nadie duerme en el bosque esta noche.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Historias de miedo para contar en la oscuridad.html"><img src="Multimedia/Terror/Historias de miedo para contar en la oscuridad.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La leyenda del lobo de la montaña.html"><img src="Multimedia/Terror/La leyenda del lobo de la montaña.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Al 3er día.html"><img src="Multimedia/Terror/Al 3er día.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La forma del miedo.html"><img src="Multimedia/Terror/La forma del miedo.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Dentro de La Oscuridad.html"><img src="Multimedia/Terror/Dentro de La Oscuridad.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Un Siniestro Cuento de Navidad.html"><img src="Multimedia/Terror/Un Siniestro Cuento de Navidad.jpg" alt="" class="item-img"></a>
+        </div>
+
+        <div class="item">
+            <a href="Terror/La Otra Cara de Dorian.html"><img src="Multimedia/Terror/La Otra Cara de Dorian.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La Maldición de Savannah.html"><img src="Multimedia/Terror/La Maldición de Savannah.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La melodía del diablo.html"><img src="Multimedia/Terror/La partitura.jpg" alt="" class="item-img"></a>
+        </div>
+	    
+	<div class="item">
+            <a href="Terror/¿Eres tú, papá.html"><img src="Multimedia/Terror/Eres tú, papá.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Burga.html"><img src="Multimedia/Terror/Burga.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El beso del demonio.html"><img src="Multimedia/Terror/El beso del demonio.jpg" alt="" class="item-img"></a>
+        </div> 
+        <div class="item">
+            <a href="Terror/Vampiras The Brides.html"><img src="Multimedia/Terror/Vampiras The Brides.jpg" alt="" class="item-img"></a>
+        </div> 
+        <div class="item">
+            <a href="Terror/Destino Final 5.html"><img src="Multimedia/Terror/Destino Final 5.jpg" alt="" class="item-img"></a>
+        </div> 
+        <div class="item">
+            <a href="Terror/El demonio neón.html"><img src="https://image.tmdb.org/t/p/original/oi7fIEMoga9ojGNaZvSCMzdFmVz.jpg" alt="" class="item-img"></a>
+        </div>  
+        <div class="item">
+            <a href="Terror/Spirit Doll.html"><img src="Multimedia/Terror/Spirit Doll.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/No hables con extraños.html"><img src="Multimedia/Terror/No hables con extraños.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Los Extraños Capítulo 1.html"><img src="Multimedia/Terror/Los Extraños Capítulo 1.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Arácnidos.html"><img src="Multimedia/Terror/Arácnidos.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La ermita.html"><img src="Multimedia/Terror/La ermita.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La casa embrujada.html"><img src="Multimedia/Terror/La casa embrujada.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Cuarentena.html"><img src="Multimedia/Terror/Cuarentena.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La primera profecía.html"><img src="Multimedia/Terror/La primera profecía.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El juego de la muerte.html"><img src="Multimedia/Terror/El juego de la muerte.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Tarot de la muerte.html"><img src="Multimedia/Terror/Tarot de la muerte.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Babadook.html"><img src="Multimedia/Terror/Babadook.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Campton Manor.html"><img src="Multimedia/Terror/Campton Manor.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El hombre de mis pesadillas.html"><img src="Multimedia/Terror/El hombre de mis pesadillas.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Poltergeist Juegos diabólicos.html"><img src="Multimedia/Terror/Poltergeist Juegos diabólicos.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Zona mortal.html"><img src="Multimedia/Terror/Zona mortal.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/A Haunting in Ravenwood.html"><img src="Multimedia/Terror/A Haunting in Ravenwood.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El juego del ascensor.html"><img src="Multimedia/Terror/El juego del ascensor.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Jeepers creepers 3.html"><img src="Multimedia/Terror/Jeepers Creepers 3.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/No vallas a colgar.html"><img src="Multimedia/Terror/¡No vayas a colgar!.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Masacre en el tren de la muerte.html"><img src="Multimedia/Terror/Masacre en el tren de la muerte.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El Payaso de Green Bay.html"><img src="Multimedia/Terror/El Payaso de Green Bay.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Auxilio.html"><img src="Multimedia/Terror/Auxilio.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/[REC]⁴ Apocalipsis.html"><img src="Multimedia/Terror/[REC] 4 Apocalipsis.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El experimento fantasma.html"><img src="Multimedia/Terror/El experimento fantasma.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Hostel.html"><img src="Multimedia/Terror/Hostal.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Hostel 3 De vuelta al horror.html"><img src="Multimedia/Terror/Hostel 3 De vuelta al horror.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Jack en la caja maldita 3 - El Ascenso.html"><img src="Multimedia/Terror/Jack en la caja maldita 3 - El Ascenso.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Los fantasmas del lunes.html"><img src="Multimedia/Terror/Los fantasmas del lunes.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Sleep El mal no duerme.html"><img src="Multimedia/Terror/Sleep El mal no duerme.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Los ojos del mal.html"><img src="Multimedia/Terror/Los ojos del mal.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Espiritus oscuros.html"><img src="Multimedia/Terror/ESPIRITUS 0SCUROS.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/The Possession (El origen del mal).html"><img src="Multimedia/Terror/The Possession (El origen del mal).jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La crucifixión.html"><img src="Multimedia/Terror/La crucifixión.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/It 2.html"><img src="Multimedia/Terror/It 2.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/It.html"><img src="Multimedia/Terror/It.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Viraliza o Muere.html"><img src="Multimedia/Terror/Viraliza o Muere.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El grito.html"><img src="Multimedia/Terror/El grito.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Z quiere jugar.html"><img src="Multimedia/Terror/Z quiere Juga.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Brightburn Hijo De La Oscuridad.html"><img src="Multimedia/Terror/Brightburn Hijo De La Oscuridad.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Escape room 2.html"><img src="Multimedia/Terror/Escape room 2.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Ofrenda Al Demonio.html"><img src="Multimedia/Terror/Ofrenda Al Demonio.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Hellblazers Infierno en la Tierra.html"><img src="Multimedia/Terror/Hellblazers Infierno en la Tierra.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/halloween la noche final.html"><img src="Multimedia/Terror/halloween la noche final.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/hay algo mal con los niños.html"><img src="Multimedia/Terror/hay algo mal con los niños.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/scream 6.html"><img src="Multimedia/Terror/Scream 6.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/fredys.html"><img src="Multimedia/Terror/Freddy's.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Come play.html"><img src="Multimedia/Terror/Come play.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Tin y tina.html"><img src="Multimedia/Terror/Tin y Tina.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Aguas siniestras.html"><img src="Multimedia/Terror/Aguas siniestras.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Hermana muerte.html"><img src="Multimedia/Terror/Hermana Muerte.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/insidius 5.html"><img src="Multimedia/Terror/Insidious 5.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Juega o muere.html"><img src="Multimedia/Terror/Juega o Muere.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El bufón.html"><img src="Multimedia/Terror/El Bufón.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Hablame.html"><img src="Multimedia/Terror/Háblame.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Winnie the Pooh Sangre y Miel.html"><img src="Multimedia/Terror/Winnie the Pooh Sangre y Miel.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Viernes negro.html"><img src="Multimedia/Terror/Viernes negro.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/El exorcista del papa.html"><img src="Multimedia/Terror/El exorcista del papa.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/La monja 2.html"><img src="Multimedia/Terror/La monja 2.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Abigail.html"><img src="Multimedia/Terror/Abigail.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Posesion infernal.html"><img src="Multimedia/Terror/posesion infernal.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Arrástrame al infierno.html"><img src="Multimedia/Terror/Arrastrame al Infierno.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Slender Man.html"><img src="Multimedia/Terror/Slenderman.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/la Bruja de Blair.html"><img src="Multimedia/Terror/la Bruja de Blair.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Escalera al infierno.html"><img src="Multimedia/Terror/Escalera al infierno.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Boogeyman El nombre del miedo.html"><img src="Multimedia/Terror/Boogeyman El nombre del miedo.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Hatching Cría siniestra.html"><img src="Multimedia/Terror/Hatching Cría siniestra.jpg" alt="" class="item-img"></a>
+        </div>
+        <div class="item">
+            <a href="Terror/Boogeyman Tu miedo es real.html"><img src="Multimedia/Terror/Boogeyman Tu miedo es real.jpg" alt="" class="item-img"></a>
+        </div>
+        
+		</div> 
+        
+        <!-- Paginación -->
+    <div class="pagination">
+        <button onclick="previousPage()" class="netflix-button"><i class="fas fa-chevron-left"></i> </button>
+        <span class="current-page" id="currentPage">1</span> - <span class="total-pages" id="totalPages">1</span>
+        <button onclick="nextPage()" class="netflix-button"> <i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        let moviesPerPage = 50; // Número de películas por página por defecto
+        let currentPage = 1; // Página actual, inicializada en 1
+
+        // Función para mostrar las películas de la página actual
+        function showMovies(page) {
+            const items = document.querySelectorAll('.item');
+            const startIndex = (page - 1) * moviesPerPage;
+            const endIndex = page * moviesPerPage;
+
+            items.forEach((item, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Función para ir a la página anterior
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                document.getElementById('currentPage').textContent = currentPage;
+                showMovies(currentPage);
+            }
+        }
+
+        // Función para ir a la página siguiente
+        function nextPage() {
+            const totalMovies = document.querySelectorAll('.item').length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
+
+            if (currentPage < totalPages) {
+                currentPage++;
+                document.getElementById('currentPage').textContent = currentPage;
+                showMovies(currentPage);
+            }
+        }
+
+        // Mostrar las películas de la primera página al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ajustar el número de películas por página en dispositivos móviles
+            if (window.innerWidth <= 768) {
+                moviesPerPage = 52;
+            }
+
+            showMovies(currentPage);
+            const totalMovies = document.querySelectorAll('.item').length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
+            document.getElementById('totalPages').textContent = totalPages;
+        });
+
+        // Reajustar el número de películas por página cuando la ventana cambie de tamaño
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 768) {
+                moviesPerPage = 52;
+            } else {
+                moviesPerPage = 40;
+            }
+
+            showMovies(currentPage);
+            const totalMovies = document.querySelectorAll('.item').length;
+            const totalPages = Math.ceil(totalMovies / moviesPerPage);
+            document.getElementById('totalPages').textContent = totalPages;
+        });
+    </script>
+</body>
+</html>

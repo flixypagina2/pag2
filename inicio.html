@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/estilos.css">
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://example.com/path-to-your-canavar-font.css">
+        <!-- Incluir Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <title>inicio</title>
+        <style>
+        /* Estilos para la barra de navegación */
+        .header {
+            background-color: #0e0d0d;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            z-index: 1000; /* Asegura que el menú esté por encima del fondo */
+        }
+        main {
+            margin-top: -50px; /* Ajustar el margen superior para acercar el contenido al menú */
+        }
+        
+
+        .logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .secciones-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            width: 0;
+            opacity: 0;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        .search-container:hover .search-input,
+        .search-input:focus {
+            width: 210px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ee0b0b;
+        }
+
+        /* Estilos para las sugerencias de búsqueda */
+        .search-results {
+            position: absolute;
+            top: 130%;
+            left: 0;
+            width: 210px;
+            background-color: rgba(43, 41, 41, 0.575);
+            border: 1px solid #3b313179;
+            border-top: none;
+            display: none;
+            box-shadow: 0 2px 4px rgba(168, 166, 166, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            
+        }
+
+        .search-results ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-results li:hover {
+            background-color: rgba(255, 0, 0, 0.534);
+        }
+
+        .search-results a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        /* Estilos para el menú */
+        .menu-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .menu-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(8, 8, 8, 0.452);
+            backdrop-filter: blur(5px);
+        }
+
+        .menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000; /* Asegura que el menú esté por encima del fondo */
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #e50914;
+        }
+
+        
+        
+        
+    
+
+        .text-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 17px;
+            color: white;
+            font-size: 60px;
+            font-weight: bold;
+            
+            z-index: 1;
+            top: 376px;
+            
+        }
+
+        .text-overlay.bottom {
+            bottom: 5px;
+            left: 5px;
+            font-size: 14px; /* Tamaño de texto predeterminado */
+            top: 438px; /* Ajusta la posición del texto hacia arriba */
+            max-width: 400px; /* Define el ancho máximo */
+            overflow-wrap: break-word; /* Permite que las palabras se rompan si son más largas que el ancho máximo */
+            transform: translateX(4%);
+        }
+        .play-button {
+            position: absolute;
+            top: 90%;   
+            left: 5%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background-color: #e5091400;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 5px;
+            z-index: 1;
+            transition: transform 0.2s ease; /* Transición para el efecto */ 
+
+        }
+
+        .play-button:hover {
+            background-color: #ff0000;
+            transform: scale(1.1); /* Cambia el tamaño del botón al hacer hover */
+        }   
+                    
+        
+
+        /* Estilos para las secciones */
+        .sections-container {
+           
+            overflow-x: auto;
+            white-space: nowrap;
+            z-index: 1; /* Asegura que las secciones estén por debajo del menú */
+            cursor: grab; /* Cambiar el cursor al hacer clic */
+            margin-top: 10px; /* Ajustar el margen superior para acercar el contenido al menú */
+        }
+
+        .section {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 20px;
+            
+            
+        }
+            
+           
+       
+
+        .section h2 {
+            color: #fff;
+            font-size: 16px; /* Cambiado el tamaño de la fuente */
+            margin-bottom: 10px;
+            transform: translateX(4%);
+            
+        }
+
+        .section-content {
+            display: flex;
+            overflow-x: auto;
+            margin: 20px; /* Puedes ajustar este valor según tus preferencias */
+            transform: translateX(3%);
+            height: auto; /* Ajustar la altura automáticamente según el ancho */
+            object-fit: contain; /* Contener el video en lugar de cubrirlo completamente */
+            
+            
+        }
+       
+
+        .section-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .section-item {
+            flex: 0 0 auto;
+            margin-right: 10px;
+            max-width: 128px; /* Tamaño máximo de las imágenes en las secciones */
+        }
+
+        .section-item img {
+            width: 100%; /* Ajustamos el ancho de la imagen al contenedor */
+            height: auto; /* Ajustamos la altura automáticamente */
+            border-radius: 5px;
+            
+        }
+
+        .control-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: white;
+            font-size: 2em;
+            z-index: 2;
+        }
+
+        .control-button.prev {
+            left: 10px;
+        }
+
+        .control-button.next {
+            right: 10px;
+        }
+
+        /* Estilos para el nuevo slider estilo Netflix */
+        .new-slider-container {
+            position: relative;
+            z-index: -1;
+        }
+
+        @media screen and (min-width: 768px) {
+            .new-slider-container {
+                position: relative;
+                z-index: -1;
+            }
+
+        }
+    
+
+    /* Estilos para dispositivos móviles */
+    @media screen and (max-width: 768px) {
+        .play-button {
+            padding: 8px 16px;
+            font-size: 10px;
+            top: 70%;
+            margin-left: 20px; /* Cambia el valor según la cantidad de desplazamiento deseada */
+        }
+    }
+
+    /* Estilos para tabletas */
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+        .play-button {
+            padding: 10px 18px;
+            font-size: 15px;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        /* Aquí puedes agregar estilos específicos para dispositivos móviles si lo deseas */
+        .text-overlay.top {
+            display: block; /* Asegura que el text-overlay top sea visible en dispositivos móviles */
+            padding: 10px 18px;
+            font-size: 15px;
+            
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        .section-item img {
+            max-width: 97px; /* Cambia el tamaño máximo de la imagen según lo necesites */
+            
+            
+        }
+    }
+    /* Estilos para dispositivos móviles */
+    @media only screen and (max-width: 600px) {
+        .text-overlay {
+        position: absolute;
+        top: 117px;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0);
+        padding: 30px;
+        font-size: 24px;
+        color: rgb(255, 255, 255);
+        }
+    }
+    
+
+    .image-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente las imágenes */
+    }
+
+    .image-container img {
+        width: 900%; /* Las imágenes ocuparán todo el ancho disponible */
+        max-width: calc(80% - 10px); /* Para evitar que las imágenes se superpongan, establece un ancho máximo */
+        height: auto; /* Mantiene la proporción de aspecto de las imágenes */
+    }
+    
+
+    .background--banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background--banner video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Media query para pantallas pequeñas (dispositivos móviles) */
+@media (max-width: 768px) {
+    .background--banner video {
+        width: 100%;
+        height: auto; /* Ajustar la altura automáticamente según el ancho */
+        object-fit: contain; /* Contener el video en lugar de cubrirlo completamente */
+    }
+}
+
+
+.banner {
+    position: relative; /* Cambia a posición relativa para posicionar elementos hijos */
+    width: 100%;
+    height: auto; /* Ajustar la altura automáticamente según el ancho */
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.imagotipo {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.title-section {
+    margin: 20px 0;
+}
+
+.description-section {
+    margin: 40px 0;
+}
+
+.button-section {
+    position: absolute;
+    bottom: 10%; /* Distancia desde la parte inferior de la pantalla */
+    left: 5%; /* Distancia desde la parte izquierda de la pantalla */
+}
+
+.title {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.10em; /* Tamaño del título */
+    margin: 0;
+    color: rgb(250, 0, 0);
+    
+}
+
+.description {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2em; /* Tamaño de la descripción */
+    margin: 0;
+}
+
+.btn-3d {
+    display: inline-block;
+    padding: 15px 30px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 0, 0, 0.89);
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-3d:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .title-section {
+        bottom: 10%; /* Ajusta esta distancia según sea necesario */
+    }
+
+    .description-section {
+        bottom: 20%; /* Ajusta esta distancia según sea necesario */
+    }
+
+    .button-section {
+        bottom: 30%; /* Ajusta esta distancia según sea necesario */
+    }
+}
+
+
+.imagotipo {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.title-section {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 157px;
+    left: 20px;
+    max-width: 600px;
+}
+
+.description-section {
+    position: absolute;
+    bottom: 68px;
+    left: 20px;
+    max-width: 600px;
+}
+
+.button-section {
+    position: absolute;
+    bottom: 43px;
+    left: 20px;
+}
+
+.footer {
+        align-items: flex-start; /* Alinea los elementos al principio del eje y */
+        margin: -30px 0;
+        width: 100%;
+        height: auto; /* Ajustar la altura automáticamente según el ancho */
+        object-fit: contain; /* Contener el video en lugar de cubrirlo completamente */
+        
+        
+    }  
+
+
+
+@media screen and (max-width: 768px) {
+    .title {
+        font-size: 2.10em;
+        margin: -60px 0;
+    }
+
+    
+    .description {
+        font-size: .95em;
+        margin: -18px 0;
+        max-width: 300px;
+    }
+    .btn-3d {
+        font-size: 0.80em;
+        padding: 9px 20px;
+        margin-top: -20px !important; /* Aplicar !important para priorizar este estilo */
+    }
+    .banner {
+        align-items: flex-start; /* Alinea los elementos al principio del eje y */
+        margin: -327px 0;
+    }
+
+    .title-section {
+        bottom: 162px; /* Ajusta esta distancia según sea necesario */
+    }
+
+    .title-section {
+        bottom: 153px; /* Ajusta esta distancia según sea necesario */
+
+    }
+
+    .footer {
+        align-items: flex-start; /* Alinea los elementos al principio del eje y */
+        margin: -327px 0;
+        width: 100%;
+        height: auto; /* Ajustar la altura automáticamente según el ancho */
+        object-fit: contain; /* Contener el video en lugar de cubrirlo completamente */
+        
+        
+    }    
+        
+    .sections-container {
+        margin: -10px 0;
+        
+    }  
+}  
+
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6D37VPPT8"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-W6D37VPPT8');
+</script>
+</head>
+<body>
+    <!-- Header -->
+    <main>            
+        <div class="content-all">
+            <header class="header">
+                <button class="secciones-btn" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i> <!-- Icono de menú -->
+                </button>
+                <div class="logo">
+                    <center><a href="inicio.html"><img src="img/Flixy-logo.gif" alt="Logo de películas"></a></center>
+                </div>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput">
+                    <i class="fas fa-search search-icon"></i>
+                    <div class="search-results" id="searchResults">
+                        <ul>
+                            <li><a href="peliculas/Deadpool & Wolverine.html">Deadpool & Wolverine</a></li>
+                            <li><a href="series/La fiesta de las salchichas Frutopía.html">La fiesta de las salchichas Frutopía</a></li>
+                            <li><a href="peliculas/Valle de sombras.html">Valle de sombras</a></li>
+                            <li><a href="peliculas/Yo, Capitán.html">Yo, Capitán</a></li>
+                            <li><a href="peliculas/Conan El Bárbaro.html">Conan El Bárbaro</a></li>
+                            <li><a href="peliculas/Danger Close The Battle of Long Tan.html">Danger Close: The Battle of Long Tan</a></li>
+                            <li><a href="peliculas/Predadores.html">Predadores</a></li>
+                            <li><a href="peliculas/Valerian Y La Ciudad De Los Mil Planetas.html">Valerian Y La Ciudad De Los Mil Planetas</a></li>
+                            <li><a href="peliculas/Animales fantásticos y dónde encontrarlos.html">Animales fantásticos y dónde encontrarlos</a></li>
+                            <li><a href="peliculas/Colossal Ella es un monstruo.html">Colossal Ella es un monstruo</a></li>
+                            <li><a href="peliculas/Liga de la Justicia.html">Liga de la Justicia</a></li>
+                            <li><a href="peliculas/Soldado Virtual.html">Soldado Virtual</a></li>
+                            <li><a href="peliculas/El Sexto Bus.html">El Sexto Bus</a></li>
+                            <li><a href="peliculas/Zombieland 2 Tiro de gracia.html">Zombieland 2: Tiro de gracia</a></li>
+                            <li><a href="Terror/Nadie duerme en el bosque esta noche.html">Nadie duerme en el bosque esta noche </a></li>
+                            <li><a href="Terror/Historias de miedo para contar en la oscuridad.html">Historias de miedo para contar en la oscuridad</a></li>
+                            <li><a href="Terror/La leyenda del lobo de la montaña.html">La leyenda del lobo de la montaña</a></li>
+                            <li><a href="Terror/Al 3er día.html">Al 3er día</a></li>
+                            <li><a href="Terror/La forma del miedo.html">La forma del miedo</a></li>
+                            <li><a href="Terror/Dentro de La Oscuridad.html">Dentro de La Oscuridad</a></li>
+                            <li><a href="Terror/Un Siniestro Cuento de Navidad.html">Un Siniestro Cuento de Navidad</a></li>
+                            <li><a href="peliculas/DOCTOR STRANGE EN EL MULTIVERSO DE LA LOCURA.html">Doctor Strange en el multiverso de la locura</a></li>
+                            <li><a href="peliculas/Predator La presa.html">Predator La presa</a></li>
+                            <li><a href="Infantil/Amigos imaginarios.html">Amigos imaginarios </a></li>
+                            <li><a href="Infantil/Chicken Little.html">Chicken Little </a></li>
+                            <li><a href="Infantil/Monster house La casa de los sustos.html">Monster house La casa de los sustos </a></li>
+                            <li><a href="Infantil/Chicken Little.html">Chicken Little </a></li>
+                            <li><a href="Infantil/Monster house La casa de los sustos.html">Monster house La casa de los sustos </a></li>
+                            <li><a href="Terror/No lo abras.html">no lo abras </a></li>
+                            <li><a href="Terror/Winnie de Pooh Miel y Sangre 2.html">Winnie de Pooh Miel y Sangre 2 </a></li>
+                            <li><a href="Terror/Susurros Mortales.html">Susurros Mortales </a></li>
+                            <li><a href="peliculas/Los-vigilantes.html">Observados </a></li>
+                            <li><a href="peliculas/Examen.html">Examen </a></li>
+                            <li><a href="peliculas/Superdetective-en-Hollywood-Axel-F.html">Superdetective en Hollywood Axel F </a></li>
+                            <li><a href="peliculas/Mad Max 3 Más Allá De La Cúpula Del Trueno.html">Mad Max 3 Más Allá De La Cúpula Del Trueno </a></li>
+                            <li><a href="peliculas/Resident Evil Capítulo final.html">Resident Evil Capítulo final </a></li>
+                            <li><a href="peliculas/El Matador Misión de Rescate.html">El Matador Misión de Rescate </a></li>
+                            <li><a href="peliculas/El Ingeniero.html">El Ingeniero </a></li>
+                            <li><a href="peliculas/Retumbar a través de la oscuridad.html">Retumbar a través de la oscuridad </a></li>
+                            <li><a href="Terror/La Maldición de Savannah.html">La Maldición de Savannah </a></li>
+                            <li><a href="Terror/La melodía del diablo.html">La partitura </a></li>
+                            <li><a href="Terror/La Otra Cara de Dorian.html">La Otra Cara de Dorian </a></li>
+                            <li><a href="peliculas/La Guerrera China.html">La Guerrera China </a></li>
+                            <li><a href="peliculas/Omerta 612.html">Omerta 6/12</a></li>
+                            <li><a href="peliculas/578 Magnum.html">578 Magnum</a></li>
+                            <li><a href="peliculas/Murder City.html">Murder City</a></li>
+                            <li><a href="peliculas/Alita.html">Alita: Ángel de combate</a></li>
+                            <li><a href="peliculas/Como matar a tu marido.html">Como matar a tu marido</a></li>
+                            <li><a href="peliculas/Taken from Rio Bravo.html">Taken from Rio Bravo</a></li>
+                            <li><a href="Comedia/El robo del siglo.html">El robo del siglo </a></li>
+                            <li><a href="Comedia/Lisa Frankenstein.html">Lisa Frankenstein </a></li>
+                            <li><a href="Comedia/Dobles de acción.html">Dobles de acción </a></li>
+                            <li><a href="Comedia/Snack Shack.html">Snack Shack </a></li>
+                            <li><a href="Comedia/La Madre de la Novia.html">Snack Shack </a></li>
+                            <li><a href="Comedia/Permanente.html">Permanente </a></li>
+                            <li><a href="Comedia/Perra vida.html">Perra vida </a></li>
+                            <li><a href="Comedia/Es por su bien.html">Es por su bien </a></li>
+                            <li><a href="Comedia/La herencia del tío.html">La herencia del tío </a></li>
+                            <li><a href="Comedia/Es tiempo de amor.html">Es tiempo de amor </a></li>
+                            <li><a href="Comedia/¿Estoy bien.html">¿Estoy bien? </a></li>
+                            <li><a href="Comedia/Matusalén.html">Matusalén </a></li>
+                            <li><a href="Comedia/La herencia tiene un precio.html">La herencia tiene un precio </a></li>
+                            <li><a href="Comedia/Demasiado mayor para cuentos de hadas 2.html">Demasiado mayor para cuentos de hadas 2 </a></li>
+                            <li><a href="Comedia/Crew.html">Crew </a></li>
+                            <li><a href="Comedia/La joven Francesa.html">La joven Francesa </a></li>
+                            <li><a href="peliculas/Ip man 4.html">Ip man 4 </a></li>
+                            <li><a href="peliculas/Ant-Man y la Avispa Quantumanía.html">Ant-Man y la Avispa Quantumanía </a></li>
+                            <li><a href="peliculas/Godzilla Vs Kong.html">Godzilla Vs Kong </a></li>
+                            <li><a href="peliculas/Godzilla y Kong el nuevo imperio HD.html">Godzilla y Kong: El nuevo imperio </a></li>
+                            <li><a href="peliculas/Fortaleza prohibida.html">Fortaleza prohibida </a></li>
+                            <li><a href="peliculas/avatar camino del agua.html">Avatar camino del agua </a></li>
+                            <li><a href="peliculas/La sociedad de la nieve.html">La sociedad de la nieve </a></li>
+                            <li><a href="peliculas/El creador.html">El creador </a></li>
+                            <li><a href="peliculas/Sisu.html">Sisu </a></li>
+                            <li><a href="peliculas/Cazador de demonios.html">Cazador de demonios </a></li>
+                            <li><a href="peliculas/Wonka.html">Wonka</a></li>
+                            <li><a href="peliculas/Aquaman 2.html">Aquaman 2 </a></li>
+                            <li><a href="peliculas/Saw X.html">Saw X</a></li>
+                            <li><a href="peliculas/Aladdín.html">Aladdín</a></li>
+                            <li><a href="peliculas/Rapidos y furiosos X.html">Rápidos y furiosos X</a></li>
+                            <li><a href="peliculas/john wick 4.html">John Wick 4</a></li>
+                            <li><a href="peliculas/Extraxion 2.html">Misión rescate 2</a></li>
+                            <li><a href="peliculas/Luther Cae la noche.html">Luther Cae la noche</a></li>
+                            <li><a href="peliculas/Agente stone.html">Agente stone</a></li>
+                            <li><a href="peliculas/shazam y la furia de los dioses.html">Shazam y la furia de los dioses </a></li>
+                            <li><a href="peliculas/megalodon 2.html">Megalodon 2</a></li>
+                            <li><a href="peliculas/Melanie Martinez K-12.html">Melanie Martinez K-12 </a></li>
+                            <li><a href="peliculas/Evil Dead Rise.html">Evil Dead Rise</a></li>
+                            <li><a href="peliculas/El barco.html">El barco</a></li>
+                            <li><a href="peliculas/Hacia la libertad.html">Hacia la libertad </a></li>
+                            <li><a href="peliculas/Napoleón.html">Napoleón</a></li>
+                            <li><a href="peliculas/Madame Web.html">Madame Web</a></li>
+                            <li><a href="peliculas/megan.html">Megan</a></li>
+                            <li><a href="peliculas/Black Adam.html">Black Adam </a></li>
+                            <li><a href="peliculas/Rebel Moon 1 La niña del fuego.html">Rebel Moon 1 La niña del fuego </a></li>
+                            <li><a href="peliculas/Pantera Negra Wakanda por siempre.html">Pantera Negra Wakanda por siempre </a></li>
+                            <li><a href="peliculas/Lobo vikingo.html">Lobo vikingo</a></li>
+                            <li><a href="peliculas/Código 8 2 - Renegados.html">Código 8 (Parte 2)</a></li>
+                            <li><a href="peliculas/Tau.html">Tau</a></li>
+                            <li><a href="peliculas/60 minutos.html">60 minutos</a></li>
+                            <li><a href="peliculas/Blue Beetle.html">Blue Beetle</a></li>
+                            <li><a href="peliculas/Sonido de libertad.html">Sonido de libertad</a></li>
+                            <li><a href="peliculas/Los Juegos del Hambre Balada de pájaros cantores y serpientes.html">Los Juegos del Hambre: Balada de pájaros cantores y serpientes</a></li>
+                            <li><a href="peliculas/Damsel.html">Damsel</a></li>
+                            <li><a href="peliculas/Guardianes de la Galaxia 3.html">Guardianes de la Galaxia 3</a></li>
+                            <li><a href="peliculas/Barbie.html">Barbie</a></li>
+                            <li><a href="peliculas/Transformers El despertar de las bestias.html">Transformers El despertar de las bestias</a></li>
+                            <li><a href="peliculas/Duna.html">Duna</a></li>
+                            <li><a href="peliculas/Beekeeper Sentencia de Muerte.html">Beekeeper Sentencia de Muerte</a></li>
+                            <li><a href="peliculas/Sobrevivientes Después Del Terremoto.html">Sobrevivientes Después Del Terremoto</a></li>
+                            <li><a href="peliculas/la mujer rey.html">La mujer rey</a></li>
+                            <li><a href="peliculas/hereo por encargo.html">Hereo por encargo</a></li>
+                            <li><a href="peliculas/El duro.html">El duro</a></li>
+                            <li><a href="peliculas/Bob Marley.html">Bob Marley</a></li>
+                            <li><a href="peliculas/Criptoestafas.html">Criptoestafas</a></li>
+                            <li><a href="peliculas/Bird Box Barcelona.html">Bird Box Barcelona</a></li>
+                            <li><a href="peliculas/The baker - El panadero.html">The baker - El panadero </a></li>
+                            <li><a href="peliculas/crhonical 2067.html">crhonical 2067.html</a></li>
+                            <li><a href="peliculas/El salario del miedo.html">El salario del miedo</a></li>
+                            <li><a href="peliculas/Jade - Guerrera solitaria.html">Jade - Guerrera solitaria</a></li>
+                            <li><a href="peliculas/Copperman.html">Copperman</a></li>
+                            <li><a href="peliculas/un novato en apuros 2.html">un novato en apuros 2</a></li>
+                            <li><a href="peliculas/57 segundos.html">57 segundos</a></li>
+                            <li><a href="peliculas/la sociedad americana de negros magos.html">la sociedad americana de negros magos</a></li>
+                            <li><a href="peliculas/Recuerdos mortales.html">Recuerdos mortales</a></li>
+                            <li><a href="peliculas/Mision rescate.html">Mision rescate</a></li>
+                            <li><a href="peliculas/Pokémon Detective Pikachu.html">Pokémon Detective Pikachu</a></li>
+                            <li><a href="peliculas/La creación de los dioses El reino de las tormentas.html">La creación de los dioses El reino de las tormentas</a></li>
+                            <li><a href="peliculas/La carta.html">La carta</a></li>
+                            <li><a href="peliculas/proyecto génesis.html">proyecto génesis</a></li>
+                            <li><a href="peliculas/Cazafantasmas Imperio helado.html">Cazafantasmas Imperio helado</a></li>
+                            <li><a href="peliculas/Cazadores en tierra inhóspita.html">Cazadores en tierra inhóspita</a></li>
+                            <li><a href="peliculas/Space Jam Una Nueva Era.html">Space Jam Una Nueva Era</a></li>
+                            <li><a href="peliculas/Operación Narco.html">Operación Narco</a></li>
+                            <li><a href="peliculas/El hombre del norte.html">El hombre del norte</a></li>
+                            <li><a href="peliculas/Atrapados en lo profundo.html">Atrapados en lo profundo</a></li>
+                            <li><a href="peliculas/Rebelmoon parte 2 - la que deja marcas.html">Rebelmoon parte 2 - la que deja marcas</a></li>
+                            <li><a href="peliculas/Escupire Sobre tu Tumba 2.html">Escupire Sobre tu Tumba 2</a></li>
+                            <li><a href="peliculas/Monster Hunter - La cacería comienza.html">Monster Hunter - La cacería comienza</a></li>
+                            <li><a href="peliculas/City Hunter.html">City Hunter</a></li>
+                            <li><a href="peliculas/Escupire sobre tu tumba 3.html">Escupire sobre tu tumba 3</a></li>
+                            <li><a href="peliculas/Apolo 18.html">Apolo 18</a></li>
+                            <li><a href="peliculas/Slither La plaga.html">Slither La plaga</a></li>
+                            <li><a href="peliculas/Pobres criaturas.html">Pobres criaturas</a></li>
+                            <li><a href="peliculas/Recovery.html">Recovery</a></li>
+                            <li><a href="peliculas/La mesita del comedor.html">La mesita del comedor</a></li>
+                            <li><a href="peliculas/El llanero solitario.html">El llanero solitario</a></li>
+                            <li><a href="peliculas/Sayen - la cazadora.html">Sayen - la cazadora.html</a></li>
+                            <li><a href="peliculas/Un cuento de circo y una cancion de amor.html">Un cuento de circo y una cancion de amor</a></li>
+                            <li><a href="peliculas/Te llevo en el alma.html">Te llevo en el alma</a></li>
+                            <li><a href="peliculas/Fiesta en la Madriguera.html">Fiesta en la Madriguera</a></li>
+                            <li><a href="peliculas/Godzilla Minus One.html">Godzilla Minus One</a></li>
+                            <li><a href="peliculas/TAYLOR SWIFT  THE ERAS TOUR.html">TAYLOR SWIFT  THE ERAS TOUR</a></li>
+                            <li><a href="peliculas/erase una vez un Deadpool.html">erase una vez un Deadpool</a></li>
+                            <li><a href="peliculas/Deadpool 2.html">Deadpool 2</a></li>
+                            <li><a href="peliculas/Deadpool.html">Deadpool </a></li>
+                            <li><a href="peliculas/La Gran Exclusiva.html">La Gran Exclusiva </a></li>
+                            <li><a href="peliculas/Contagion of Fear.html">Contagion of Fear </a></li>
+                            <li><a href="peliculas/La idea de tenerte.html">La idea de tenerte </a></li>
+                            <li><a href="peliculas/Psychokinesis.html">Psychokinesis </a></li>
+                            <li><a href="peliculas/El corazón del cazador.html">El corazón del cazador </a></li>
+                            <li><a href="peliculas/Audi vs Lancia Carrera por la Gloria.html">Audi vs Lancia Carrera por la Gloria </a></li>
+                            <li><a href="peliculas/Caza mayor.html"> Caza mayor </a></li>
+                            <li><a href="peliculas/Al final del túnel.html"> Al final del túnel </a></li>
+                            <li><a href="peliculas/Un puente a Terabithia.html"> Un puente a Terabithia </a></li>
+                            <li><a href="peliculas/Colateral.html"> Colateral </a></li>
+                            <li><a href="peliculas/Gods of the Deep.html"> Gods of the Deep </a></li>
+                            <li><a href="peliculas/El planeta de los simios Nuevo reino.html"> El planeta de los simios Nuevo reino </a></li>
+                            <li><a href="peliculas/Wanted Man Se Busca.html"> Wanted Man Se Busca </a></li>
+                            <li><a href="peliculas/Peter Pan y Wendy.html">Peter Pan y Wendy </a></li>
+                            <li><a href="peliculas/La Puerta Del Guerrero.html">La Puerta Del Guerrero </a></li>
+                            <li><a href="peliculas/La Criatura del Desierto.html">La Criatura del Desierto </a></li>
+                            <li><a href="peliculas/Control El poder de la mente.html">Control El poder de la mente </a></li>
+                            <li><a href="peliculas/kill mode.html">kill mode </a></li>
+                            <li><a href="peliculas/Sayen.html">kill mode </a></li>
+                            <li><a href="peliculas/Detención oscura.html">Detención oscura </a></li>
+                            <li><a href="peliculas/Diabolik ¡Ginko al ataque!.html">Diabolik ¡Ginko al ataque! </a></li>
+                            <li><a href="peliculas/Mega Lightning.html">Mega Lightning </a></li>
+                            <li><a href="peliculas/Tren Nocturno.html">Tren Nocturno </a></li>
+                            <li><a href="peliculas/The Locksmith.html">The Locksmith </a></li>
+                            <li><a href="peliculas/El Mercenario.html">El Mercenario </a></li>
+                            <li><a href="peliculas/Fantasy Football.html">Fantasy Football </a></li>
+                            <li><a href="peliculas/Búsqueda Peligrosa.html">Búsqueda Peligrosa </a></li>
+                            <li><a href="peliculas/Furiosa De la saga Mad Max.html">Furiosa De la saga Mad Max </a></li>
+                            <li><a href="peliculas/Mi Arma Era la Ley.html">Mi Arma Era la Ley </a></li>
+                            <li><a href="peliculas/Atlas.html">Atlas </a></li>
+                            <li><a href="peliculas/Golden Kamuy.html">Golden Kamuy </a></li>
+                            <li><a href="peliculas/Monster Mash.html">Monster Mash </a></li>
+                            <li><a href="peliculas/Plaga Zombie Invasion Americana.html">Plaga Zombie: Invasion Americana </a></li>
+                            <li><a href="peliculas/Noryang Deadly Sea.html">Noryang: la batalla final </a></li>
+                            <li><a href="peliculas/Hart duro de entrenar 2.html">Noryang: la batalla final </a></li>
+                            <li><a href="peliculas/Aguas que corroen.html">Aguas que corroen </a></li>
+                            <li><a href="peliculas/Grupo de asalto.html">Grupo de asalto </a></li>
+                            <li><a href="peliculas/Estación Zombie 2 Península.html">Estación Zombie 2 Península </a></li>
+                            <li><a href="peliculas/The dry 2 La fuerza de la naturaleza.html">The dry 2 La fuerza de la naturaleza </a></li>
+                            <li><a href="peliculas/Kill Shot.html">The dry 2 La fuerza de la naturaleza </a></li>
+                            <li><a href="peliculas/Biónicos.html">Biónicos </a></li>
+                            <li><a href="peliculas/Shaitaan.html">Shaitaan </a></li>
+                            <li><a href="peliculas/Alpha.html">Alpha </a></li>
+                            <li><a href="peliculas/Kali Ángel Vengador.html">Kali Ángel Vengador </a></li>
+                            <li><a href="peliculas/Guerra Civil.html">Guerra Civil </a></li>
+                            <li><a href="peliculas/Ip man 4.html">Ip man 4 </a></li>
+                            <li><a href="peliculas/Todo el día y una noche.html">Todo el día y una noche </a></li>
+                            <li><a href="peliculas/El llamado salvaje.html">El llamado salvaje </a></li>
+                            <li><a href="peliculas/Avengers Endgame.html">Avengers Endgame </a></li>
+                            <li><a href="peliculas/Titanic.html">Avengers Endgame </a></li>
+                            <li><a href="peliculas/Abismo (Black Water-Abyss).html">Abismo: Black Water-Abyss </a></li>
+                            <li><a href="peliculas/Bad Boys Hasta la muerte.html">Bad Boys Hasta la muerte </a></li>
+                            <li><a href="peliculas/En las profundidades del Sena.html">En las profundidades del Sena</a></li>
+                            <li><a href="peliculas/MR-9 Mision Mortal.html">MR-9 Mision Mortal</a></li>
+                            <li><a href="peliculas/Dogman Vida Inquebrantable.html">Dogman Vida Inquebrantable</a></li>
+                            <li><a href="peliculas/I.S.S..html">I.S.S.</a></li>
+                            <li><a href="peliculas/Amor y preconcepto.html">Amor y preconcepto</a></li>
+                            <li><a href="peliculas/Kong La isla Calavera.html">Kong La isla Calavera</a></li>
+                            <li><a href="peliculas/Shin Ultraman.html">Shin Ultraman</a></li>
+                            <li><a href="peliculas/John Carter Entre dos mundos.html">John Carter Entre dos mundos</a></li>
+                            <li><a href="peliculas/Detonantes.html">Detonantes</a></li>
+                            <li><a href="peliculas/La academia del Sr. Kleks.html">La academia del Sr. Kleks</a></li>
+                            <li><a href="Terror/El demonio neón.html">El demonio neón </a></li>
+                            <li><a href="Terror/Boogeyman Tu miedo es real.html">Boogeyman: Tu miedo es real </a></li>
+                            <li><a href="Terror/Hatching Cría siniestra.html">Terror/Hatching Cría siniestra </a></li>
+                            <li><a href="Terror/Boogeyman El nombre del miedo.html">Boogeyman: El nombre del miedo </a></li>
+                            <li><a href="Terror/Escalera al infierno.html">Escalera al infierno </a></li>
+                            <li><a href="Terror/la Bruja de Blair.html">la Bruja de Blair </a></li>
+                            <li><a href="Terror/Boogeyman 2.html">Boogeyman 2 </a></li>
+                            <li><a href="Terror/Slender Man.html">Slender Man </a></li>
+                            <li><a href="Terror/Arrástrame al infierno.html">Arrástrame al infierno </a></li>
+                            <li><a href="Terror/Posesion infernal.html">Posesion infernal </a></li>
+                            <li><a href="Terror/Abigail.html">Abigail </a></li>
+                            <li><a href="Terror/La monja 2.html">La monja 2 </a></li>
+                            <li><a href="Terror/El exorcista del papa.html">El exorcista del papa </a></li>
+                            <li><a href="Terror/Viernes negro.html">Viernes negro </a></li>
+                            <li><a href="Terror/Winnie the Pooh Sangre y Miel.html">Winnie the Pooh Sangre y Miel </a></li>
+                            <li><a href="Terror/Hablame.html">Hablame </a></li>
+                            <li><a href="Terror/El bufón.html">El bufón </a></li>
+                            <li><a href="Terror/Juega o muere.html">Juega o muere</a></li>
+                            <li><a href="Terror/insidius 5.html">insidius 5</a></li>
+                            <li><a href="Terror/Hermana muerte.html">Hermana muerte</a></li>
+                            <li><a href="Terror/Aguas siniestras.html">Aguas siniestras</a></li>
+                            <li><a href="Terror/Tin y tina.html">Tin y tina</a></li>
+                            <li><a href="Terror/Come play.html">Come play</a></li>
+                            <li><a href="Terror/fredys.html">fredys</a></li>
+                            <li><a href="Terror/scream 6.html">scream 6</a></li>
+                            <li><a href="Terror/hay algo mal con los niños.html">hay algo mal con los niños</a></li>
+                            <li><a href="Terror/halloween la noche final.html">halloween la noche final</a></li>
+                            <li><a href="Terror/Hellblazers Infierno en la Tierra.html">Hellblazers Infierno en la Tierra</a></li>
+                            <li><a href="Terror/Ofrenda Al Demonio.html">Ofrenda Al Demonio</a></li>
+                            <li><a href="Terror/Escape room 2.html">Escape room 2</a></li>
+                            <li><a href="Terror/Brightburn Hijo De La Oscuridad.html">Brightburn Hijo De La Oscuridad</a></li>
+                            <li><a href="Terror/Z quiere jugar.html">Z quiere jugar</a></li>
+                            <li><a href="Terror/El grito.html">El grito</a></li>
+                            <li><a href="Terror/Viraliza o Muere.html">Viraliza o Muere</a></li>
+                            <li><a href="Terror/It.html">It</a></li>
+                            <li><a href="Terror/It 2.html">It 2</a></li>
+                            <li><a href="Terror/La crucifixión.html">La crucifixión</a></li>
+                            <li><a href="Terror/The Possession (El origen del mal).html">The Possession (El origen del mal)</a></li>
+                            <li><a href="Terror/Espiritus oscuros.html">Espiritus oscuros</a></li>
+                            <li><a href="Terror/Los ojos del mal.html">Los ojos del mal</a></li>
+                            <li><a href="Terror/Sleep El mal no duerme.html">Sleep El mal no duerme</a></li>
+                            <li><a href="Terror/Los fantasmas del lunes.html">Los fantasmas del lunes</a></li>
+                            <li><a href="Terror/Jack en la caja maldita 3 - El Ascenso.html">Jack en la caja maldita 3 - El Ascenso</a></li>
+                            <li><a href="Terror/Hostel 3 De vuelta al horror.html">Hostel 3 De vuelta al horror</a></li>
+                            <li><a href="Terror/Hostel.html">Hostal</a></li>
+                            <li><a href="Terror/El experimento fantasma.html">El experimento fantasma</a></li>
+                            <li><a href="Terror/[REC]⁴ Apocalipsis.html">[REC] 4 Apocalipsis</a></li>
+                            <li><a href="Terror/Auxilio.html">Auxilio</a></li>
+                            <li><a href="Terror/El Payaso de Green Bay.html">El Payaso de Green Bay</a></li>
+                            <li><a href="Terror/Masacre en el tren de la muerte.html">Masacre en el tren de la muerte</a></li>
+                            <li><a href="Terror/No vallas a colgar.html">No vallas a colgar</a></li>
+                            <li><a href="Terror/Jeepers creepers 3.html">Jeepers creepers 3</a></li>
+                            <li><a href="Terror/El juego del ascensor.html">El juego del ascensor</a></li>
+                            <li><a href="Terror/A Haunting in Ravenwood.html">A Haunting in Ravenwood</a></li>
+                            <li><a href="Terror/Zona mortal.html">Zona mortal</a></li>
+                            <li><a href="Terror/Poltergeist Juegos diabólicos.html">Poltergeist: Juegos diabólicos</a></li>
+                            <li><a href="Terror/El hombre de mis pesadillas.html">El hombre de mis pesadillas</a></li>
+                            <li><a href="Terror/Campton Manor.html">Campton Manor</a></li>
+                            <li><a href="Terror/Babadook.html">Babadook</a></li>
+                            <li><a href="Terror/Tarot de la muerte.html">Tarot de la muerte</a></li>
+                            <li><a href="Terror/El juego de la muerte.html">El juego de la muerte</a></li>
+                            <li><a href="Terror/La primera profecía.html">La primera profecía</a></li>
+                            <li><a href="Terror/Cuarentena.html">Cuarentena</a></li>
+                            <li><a href="Terror/La casa embrujada.html">La casa embrujada</a></li>
+                            <li><a href="Terror/La ermita.html">La ermita</a></li>
+                            <li><a href="Terror/Arácnidos.html">Arácnidos</a></li>
+                            <li><a href="Terror/Los Extraños Capítulo 1.html">Los Extraños Capítulo 1</a></li>
+                            <li><a href="Terror/No hables con extraños.html">No hables con extraños</a></li>
+                            <li><a href="Terror/Spirit Doll.html">Spirit Doll</a></li>
+                            <li><a href="Terror/Destino Final 5.html">Destino Final 5</a></li>
+                            <li><a href="Terror/Vampiras The Brides.html">Vampiras The Brides</a></li>
+                            <li><a href="Terror/El beso del demonio.html">El beso del demonio</a></li>
+                            <li><a href="Terror/Burga.html">El beso del demonio</a></li>
+                            <li><a href="Terror/¿Eres tú, papá.html">¿Eres tú, papá? </a></li>
+                            <li><a href="Infantil/Aguila y jaguar los guerreros legendarios.html">Aguila y jaguar los guerreros legendarios </a></li>
+                            <li><a href="Infantil/Lunatico.html">Lunatico </a></li>
+                            <li><a href="Infantil/Gnomos al Ataque.html">Gnomos al Ataque </a></li>
+                            <li><a href="Infantil/Kung fu Panda 4.html">Kung fu Panda 4 </a></li>
+                            <li><a href="Infantil/tortugas Ninja  Caos mutante.html">tortugas Ninja  Caos mutante </a></li>
+                            <li><a href="Infantil/Megamente contra el sindicato de Doom.html">tortugas Ninja  Caos mutante </a></li>
+                            <li><a href="Infantil/Los Casagrande.html">tortugas Ninja  Caos mutante </a></li>
+                            <li><a href="Infantil/Teoría popular.html">Teoría popular </a></li>
+                            <li><a href="Infantil/Tarta de Fresa y la bestia del cenagal.html">Tarta de Fresa y la bestia del cenagal </a></li>
+                            <li><a href="Infantil/Boonie Bears Codigo Guardian.html">Boonie Bears Codigo Guardian </a></li>
+                            <li><a href="Infantil/Migración. Un viaje patas arriba.html">Migración. Un viaje patas arriba (patos) </a></li>
+                            <li><a href="Infantil/Super mario Bross.html">Super mario Bross: La pelicula </a></li>
+                            <li><a href="Infantil/trolls 3.html">trolls 3 </a></li>
+                            <li><a href="Infantil/Wish El poder de los deseos.html">Wish El poder de los deseos.html </a></li>
+                            <li><a href="Infantil/Chicken Run Amanecer de los nuggets.html">Chicken Run Amanecer de los nuggets </a></li>
+                            <li><a href="Infantil/El Mundo Miraculous Shanghái la leyenda de LadyDragon.html">El Mundo Miraculous Shanghái la leyenda de LadyDragon </a></li>
+                            <li><a href="Infantil/Soul.html">Soul </a></li>
+                            <li><a href="Infantil/Dragon Nest Guardianes del Amanecer.html">Dragon Nest Guardianes del Amanecer </a></li>
+                            <li><a href="Infantil/Yo soy groot.html">Dragon Nest Guardianes del Amanecer </a></li>
+                            <li><a href="Infantil/Mavka Guardiana del bosque.html">Mavka Guardiana del bosque </a></li>
+                            <li><a href="Infantil/gato con botas ultimo dese.html">gato con botas ultimo dese </a></li>
+                            <li><a href="Infantil/Megamind contra el sindicato del mal.html">Megamente contra el sindicato del mal </a></li>
+                            <li><a href="Infantil/Dora ¡Di hello a la aventura!.html">Dora ¡Di hello a la aventura! </a></li>
+                            <li><a href="Infantil/Ruby, aventuras de una kraken adolescente.html">Ruby, aventuras de una kraken adolescente </a></li>
+                            <li><a href="Infantil/Las momias y el anillo perdido.html">Las momias y el anillo perdido </a></li>
+                            <li><a href="Infantil/Los Casagrande La película.html">Los Casagrande La película </a></li>
+                            <li><a href="Infantil/Luca.html">Luca </a></li>
+                            <li><a href="Infantil/El Pájaro Loco se va de campamento.html">El Pájaro Loco se va de campamento </a></li>
+                            <li><a href="Infantil/Snoopy presenta Bienvenido a casa, Franklin.html">Snoopy presenta Bienvenido a casa, Franklin </a></li>
+                            <li><a href="Infantil/Miniespías Armagedón.html">Miniespías: Armagedón </a></li>
+                            <li><a href="Infantil/Unicorn Wars.html">Unicorn Wars </a></li>
+                            <li><a href="Infantil/Space Jam Nuevas Leyendas.html">Space Jam Nuevas Leyendas </a></li>
+                            <li><a href="Infantil/Coraline y la puerta secreta.html">Coraline y la puerta secreta </a></li>
+                            <li><a href="Infantil/Frozen 2.html">Frozen 2 </a></li>
+                            <li><a href="Infantil/Kung Fu Panda 3.html">Kung Fu Panda 3 </a></li>
+                            <li><a href="Infantil/Kung Fu Panda.html">Kung Fu Panda  </a></li>
+                            <li><a href="Infantil/Kung Fu Panda 2.html">Kung Fu Panda 2 </a></li>
+                            <li><a href="Infantil/Iwaju.html">Iwaju </a></li>
+                            <li><a href="Infantil/Fixies Amigos secretos.html">Fixies Amigos secretos </a></li>
+                            <li><a href="Infantil/La leyenda del Charro Negro.html">La leyenda del charro negro </a></li>
+                            <li><a href="Infantil/Condorito La película.html">Condorito La película </a></li>
+                            <li><a href="Infantil/Baby Shark, La Gran Película.html">Baby Shark, La Gran Película</a></li>
+                            <li><a href="Infantil/Robot 7723.html">Robot 7723</a></li>
+                            <li><a href="Infantil/La Navidad de Ángela.html">La Navidad de Ángela</a></li>
+                            <li><a href="Infantil/Telma La Unicornio.html">Telma La Unicornio</a></li>
+                            <li><a href="Infantil/Legión de superhéroes.html">Legión de superhéroes</a></li>
+                            <li><a href="Infantil/Elemental.html">Elemental</a></li>
+                            <li><a href="Infantil/Spirit El Corcel Indomable.html">Spirit: El Corcel Indomable</a></li>
+                            <li><a href="Infantil/IntensaMente 2.html">IntensaMente 2</a></li>
+                            <li><a href="Infantil/Ultraman El ascenso.html" >Ultraman El ascenso </a></li>
+                            <li><a href="Infantil/Mi villano favorito 4.html" >Mi villano favorito 4 </a></li>
+                            <li><a href="Infantil/Sin tiempo para espiar Una peli de Una casa de locos.html">Loud House: No Hay Tiempo para Espiar </a></li>
+                            <li><a href="peliculas/Blanquita.html">Blanquita </a></li>
+                            <li><a href="peliculas/Ruta sin salida.html">Ruta sin salida</a></li>
+                            <li><a href="peliculas/Hawai en llamas.html">Hawai en llamas</a></li>
+                            <li><a href="peliculas/El Ministerio de la Guerra.html">El Ministerio de la Guerra</a></li>
+                            <li><a href="peliculas/Rápidos y Furiosos 7.html">Rápidos y Furiosos 7</a></li>
+                            <li><a href="peliculas/Fuerza bruta sin salida.html">Fuerza: bruta sin salida</a></li>
+                            <li><a href="peliculas/Un Lugar en Silencio 3 Día Uno.html">Un Lugar en Silencio 3: Día Uno</a></li>
+                            <li><a href="peliculas/Faro.html">Faro</a></li>
+                            <li><a href="peliculas/Desaparecidos en la noche.html">Desaparecidos en la noche</a></li>
+                            <li><a href="peliculas/Héroes de guerra.html">Heroes de guerra</a></li>
+                            <li><a href="peliculas/Hancock.html">Hancock</a></li>
+                            <li><a href="peliculas/Bosco.html">Bosco</a></li>
+                            <li><a href="peliculas/Revuelto.html">Revuelto</a></li>
+                            <li><a href="peliculas/Combate clandestino.html">Combate clandestino</a></li>
+                            <li><a href="Infantil/Bajo el muelle.html">Bajo el muelle </a></li>
+                            <li><a href="Comedia/Un Afortunado Soñador.html">Un Afortunado Soñador </a></li>
+                            <li><a href="Comedia/Infiltrada en la NASA.html">Infiltrada en la NASA </a></li>
+                            <li><a href="Comedia/Cómplices del engaño.html">Cómplices del engaño </a></li>
+                            <li><a href="peliculas/Planetquake.html">Planetquake</a></li>
+                            <li><a href="peliculas/Project Silence.html">Project Silence</a></li>
+                            <li><a href="peliculas/Tornados.html">Tornados</a></li>
+                            <li><a href="peliculas/Safehouse.html">Safehouse</a></li>
+                            <li><a href="peliculas/Dragones del aire.html">Dragones del aire</a></li>
+                            <li><a href="peliculas/Megalodon The Frenzy.html">Megalodon The Frenzy</a></li>
+                            <li><a href="peliculas/The Vigilante.html">The Vigilante</a></li>
+                            <li><a href="peliculas/Bone Cold.html">Bone Cold</a></li>
+                            <li><a href="peliculas/Darkland The Return.html">Darkland The Return</a></li>
+                            <li><a href="peliculas/No Way Out.html">No Way Out</a></li>
+                            <li><a href="peliculas/The Tomorrow Job.html">The Tomorrow Job</a></li>
+                            <li><a href="peliculas/Juego de espías La ciudad eterna.html">Juego de espías La ciudad eterna</a></li>
+                            <li><a href="peliculas/Divorcio en negro.html">Divorcio en negro</a></li>
+                            <li><a href="peliculas/Adèle y el misterio de la momia.html">Adèle y el misterio de la momia</a></li>
+                            <li><a href="peliculas/Cocodrilo, un asesino en serie.html">Cocodrilo, un asesino en serie</a></li>
+                            <li><a href="peliculas/Spawn.html">Spawn</a></li>
+                            <li><a href="peliculas/Paul.html">Paul</a></li>
+                            <li><a href="peliculas/El Descenso Parte 2.html">El Descenso Parte 2</a></li>
+                            <li><a href="peliculas/La Cocina.html">La Cocina</a></li>
+                            <li><a href="Infantil/Corre, Tiger, corre.html">Corre, Tiger, corre </a></li>
+                            <li><a href="Infantil/Tinker Bell.html">Tinker Bell </a></li>
+                            <li><a href="Comedia/Isla Bonita.html"> Isla Bonita </a></li>
+                            <li><a href="Comedia/Señora Influencer.html"> Señora Influencer </a></li>
+                            <li><a href="Terror/15 Cameras.html">15 Cameras </a></li>
+                            <li><a href="Terror/Bloodline Killer.html">Bloodline Killer </a></li>
+                            <li><a href="Terror/Inmaculada.html">Inmaculada </a></li>
+                            <li><a href="Terror/Alicia en el país de las pesadillas.html">Alicia en el país de las pesadillas </a></li>
+                            <li><a href="Terror/Susurros Mortales.html"> Susurros Mortales </a></li>
+                            <li><a href="Terror/Baghead Contacto Con La Muerte.html"> Baghead Contacto Con La Muerte </a></li>
+                            <li><a href="Infantil/Los mundos de Coraline.html"> Coraline </a></li>
+                            <li><a href="Comedia/¡Asu Mare! Los amigos.html"> Asu Mare! Los amigos </a></li>
+                            <li><a href="Comedia/El hotel de los líos García y García 2.html"> El hotel de los líos García y García 2 </a></li>
+                            <li><a href="Comedia/Socios por accidente.html"> Socios por accidente </a></li>
+                            <li><a href="Comedia/Plan en familia.html"> Plan en familia </a></li>
+                            <li><a href="peliculas/El reino mágico.html">El reino mágico</a></li>
+                            <li><a href="peliculas/La cueva, descenso al infierno.html">La cueva, descenso al infierno</a></li>
+                            <li><a href="peliculas/El francotirador de Donbás.html">El francotirador de Donbás</a></li>
+                            <li><a href="peliculas/Golda.html">Golda</a></li>
+                            <li><a href="Terror/La Bruja de Hielo.html">La Bruja de Hielo  </a></li>
+                            <li><a href="Infantil/El extra navideño del Bebé Jefazo.html"> El extra navideño del Bebé Jefazo  </a></li>
+                            <li><a href="Infantil/La Tropa Acción salva la Navidad.html"> La Tropa Acción salva la Navidad  </a></li>
+                            <li><a href="peliculas/Trampa en alta mar.html">Trampa en alta mar</a></li>
+                            <li><a href="peliculas/Harold y el lápiz mágico.html">Harold y el lápiz mágico</a></li>
+                            <li><a href="peliculas/El campeón.html">El campeón</a></li>
+                            <li><a href="peliculas/El asesino de ángeles.html">El asesino de ángeles</a></li>
+                            <li><a href="peliculas/Un Lugar En Silencio.html">Un Lugar En Silencio</a></li>
+                            <li><a href="peliculas/Elyas.html">Elyas</a></li>
+                            <li><a href="peliculas/Arena Wars.html">Elyas</a></li>
+                            <li><a href="peliculas/Brujería.html">Brujería</a></li>
+                            <li><a href="Terror/Float.html"> #Float  </a></li>
+                            <li><a href="Terror/13 exorcismos.html"> 13 exorcismos </a></li>
+                            <li><a href="Terror/Matriarca.html"> Matriarca </a></li>
+                            <li><a href="Terror/El vientre del mal.html"> El vientre del mal </a></li>
+                            <li><a href="Terror/Grimcutty Asesino implacable.html"> Grimcutty Asesino implacable </a></li>
+                            <li><a href="peliculas/Misiones cruzadas.html">  Misiones cruzadas  </a></li>
+                            <li><a href="peliculas/Los instigadores.html"> Los instigadores  </a></li>
+                            <li><a href="peliculas/Emma y el jaguar negro.html"> Emma y el jaguar negro  </a></li>
+                            <li><a href="peliculas/Romper el círculo.html"> Romper el círculo  </a></li>
+                            <li><a href="peliculas/Perspectiva.html"> Perspectiva  </a></li>
+                            <li><a href="peliculas/Sin límites (Los casos del Departamento Q).html"> Sin límites (Los casos del Departamento Q)  </a></li>
+                            <li><a href="peliculas/Borderlands El destino del universo está en juego.html"> Borderlands El destino del universo está en juego  </a></li>
+                            <li><a href="peliculas/La Dinastía Ga’a.html"> La Dinastía Ga’a </a></li>
+                            <li><a href="peliculas/Presa.html"> Presa </a></li>
+                            <li><a href="peliculas/El último aliento.html"> El último aliento  </a></li>
+                            <li><a href="peliculas/Cora.html"> Cora  </a></li>
+                            <li><a href="peliculas/Los infalibles.html"> Los infalibles  </a></li>
+                            <li><a href="peliculas/La Bestia.html"> La Bestia  </a></li>
+                            <li><a href="peliculas/Invasion Final.html"> Invasion Final  </a></li>
+                            <li><a href="peliculas/Tiburones en La Luna.html"> Tiburones en La Luna </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </main>
+            
+            <!-- Mobile Menu Container -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-background" onclick="toggleMenu()"></div>
+                <div class="menu-content">
+                    <ul class="menu">
+                        <li><a href="inicio.html">Inicio</a></li>
+                        <li><a href="Peliculas.html">Películas</a></li>
+                        <li><a href="Comedia.html">Comedia</a></li>
+                        <li><a href="terror.html">Terror</a></li>
+                        <li><a href="infantil.html">Infantil</a></li>
+                        <li><a href="">▬▬▬▬▬▬</a></li>
+                        <li><a href="Flixy tube.html">Flixy Tube</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        
+ </script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <aside class="background--banner">
+        <video muted autoplay loop poster="Multimedia/background-image.webp">
+            <source src="Multimedia/Atlas _ Tráiler oficial _ Netflix.mp4" type="video/mp4">
+            <img src="img/Flixy-logo.gif" alt="Imagen background">
+        </video>
+        <div class="banner">
+            <div class="imagotipo">  
+                <div class="title-section">
+                    <h1 class="title">Deadpool & Wolverine</h1>
+                </div>
+                <div class="description-section">
+                    <p class="description">Un Wade Wilson apático se esfuerza en la vida civil. Sus días como el mercenario moralmente flexible Deadpool quedaron atrás.  </div>
+                <div class="button-section">
+                    <a href="peliculas/Deadpool & Wolverine.html" class="btn-3d">ver pelicula</a>
+                </div>
+            </div>
+        </div>
+    </aside>
+    </main>
+    <footer class="footer">
+<div class="sections-container" id="sectionsContainer">
+<div class="section">
+<h2>Estrenos</h2>
+<div class="section-content">
+                    
+                    
+                    <div class="section-item">
+                        <a href="peliculas/Borderlands El destino del universo está en juego.html"><img src="Multimedia/Caratulas/Borderlands El destino del universo está en juego.jpg" alt="" class="item-img"></a>
+                    </div>
+                    <div class="section-item">
+                         <a href="peliculas/Perspectiva.html"><img src="Multimedia/Caratulas/Perspectiva.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="peliculas/Deadpool & Wolverine.html"><img src="Multimedia/Caratulas/Deadpool & Wolverine.jpg" alt="" class="item-img"></a>
+                    </div>
+                
+                    <div class="section-item">
+                        <a href="series/La fiesta de las salchichas Frutopía.html"><img src="Multimedia/Caratulas/La fiesta de las salchichas Frutopía.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="peliculas/Superdetective-en-Hollywood-Axel-F.html"><img src="Multimedia/Caratulas/Superdetective en Hollywood Axel F..jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="peliculas/Un Lugar en Silencio 3 Día Uno.html"><img src="Multimedia/Caratulas/Un Lugar en Silencio 3 Día Uno.jpg" alt="Estreno 1"></a>
+                    </div> 
+                     
+                    <div class="section-item">
+                        <a href="peliculas/Taken from Rio Bravo.html"><img src="Multimedia/Caratulas/Taken from Rio Bravo.jpg" alt="Estreno 1"></a>
+                    </div> 
+
+                    <div class="section-item">
+                        <a href="Infantil/Mi villano favorito 4.html"><img src="https://image.tmdb.org/t/p/original/cihfEI1cwTORZ9W0nDPgxiVCoiZ.jpg" alt="Estreno 1"></a>
+                    </div> 
+
+                    <div class="section-item">
+                        <a href="peliculas/La academia del Sr. Kleks.html"><img src="https://image.tmdb.org/t/p/original/3HoBhPg6T5st6K09QfZh4lGB0hz.jpg" alt="Estreno 1"></a>
+                    </div>
+
+                    
+                    
+                   
+                    
+                      
+                </div>
+            </div>
+        </div>
+
+        <div class="sections-container" id="sectionsContainer">
+            <div class="section">
+                
+                <h2>Recomendados</h2>
+                <div class="section-content">
+                    
+                
+
+                    <div class="section-item">
+                        <a href="peliculas/El reino mágico.html"><img src="Multimedia/Caratulas/El reino mágico.jpg" alt="" class="item-img"></a>
+                    </div>
+                    <div class="section-item">
+                        <a href="peliculas/La cueva, descenso al infierno.html"><img src="Multimedia/Caratulas/La cueva, descenso al infierno.jpg" alt="" class="item-img"></a>
+                    </div>
+
+
+                    
+                    <div class="section-item">
+                        <a href="Infantil/Los mundos de Coraline.html"><img src="Multimedia/Infantil/Los mundos de Coraline.jpg" alt="" class="item-img"></a>
+                    </div>
+                    <div class="section-item">
+                        <a href="peliculas/Avengers Endgame.html"><img src="Multimedia/Caratulas/Avengers Endgame.jpg" alt="" class="item-img"></a>
+                    </div> 
+
+                    <div class="section-item">
+                        <a href="peliculas/Ip man 4.html"><img src="Multimedia/Caratulas/Ip Man 4 El final.jpg" alt="" class="item-img"></a>
+                    </div>
+
+                    <div class="section-item">
+                        <a href="peliculas/Psychokinesis.html"><img src="Multimedia/Caratulas/Psychokinesis.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="Terror/¿Eres tú, papá.html"><img src="Multimedia/Terror/Eres tú, papá.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="Comedia/Matusalén.html"><img src="Multimedia/Comedia/Matusalén.jpg" alt="" class="item-img"></a>
+                    </div>
+                   
+                    <div class="section-item">
+                        <a href="Terror/El juego del ascensor.html"><img src="Multimedia/Terror/El juego del ascensor.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                   
+                   
+                        
+                </div>
+            </div>
+        </div>
+        <div class="sections-container" id="sectionsContainer">
+            <div class="section">
+                
+                <h2>Infantil</h2>
+                <div class="section-content">
+                    
+                    
+                    <div class="section-item">
+                        <a href="Infantil/El extra navideño del Bebé Jefazo.html"><img src="Multimedia/Infantil/El extra navideño del Bebé Jefazo.jpg" alt="" class="item-img"></a>
+                    </div>
+                    <div class="section-item">
+                        <a href="Infantil/La Tropa Acción salva la Navidad.html"><img src="Multimedia/Infantil/La Tropa Acción salva la Navidad.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="Infantil/Corre, Tiger, corre.html"><img src="Multimedia/Infantil/Corre, Tiger, corre.jpg" alt="" class="item-img"></a>
+                    </div>
+                   
+                  
+                    <div class="section-item">
+                        <a href="Infantil/Sin tiempo para espiar Una peli de Una casa de locos.html"><img src="Multimedia/Infantil/Loud House No Hay Tiempo para Espiar.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="Infantil/Mi villano favorito 4.html"><img src="Multimedia/Infantil/Mi villano favorito 4.jpg" alt="" class="item-img"></a>
+                    </div> 
+
+                    <div class="section-item">
+                        <a href="Infantil/Ultraman El ascenso.html"><img src="Multimedia/Infantil/Ultraman El ascenso.jpg" alt="" class="item-img"></a>
+                    </div>
+
+                    <div class="section-item">
+                        <a href="Infantil/IntensaMente 2.html"><img src="Multimedia/Infantil/Intensamente 2.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="Infantil/Elemental.html"><img src="Multimedia/Infantil/Elemental.jpg" alt="" class="item-img"></a>
+                    </div>
+                    
+                    <div class="section-item">
+                        <a href="Infantil/Spirit El Corcel Indomable.html"><img src="Multimedia/Infantil/Spirit El corcel indomable.jpg" alt="" class="item-img"></a>
+                    </div>
+                   
+                    
+                    
+                    
+                       
+                </div>
+            </div>
+        </div>
+   
+<br>
+<br>
+<br>
+        <div class="footer--contenedor">
+            
+            <div class="informacion">
+                
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Ventanas Emergentes</title>
+                <style>
+                    /* Estilo para la ventana emergente */
+                    .ventana-emergente {
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: #141414; /* Color de fondo oscuro similar a Netflix */
+                        color: #fff; /* Color del texto */
+                        border: 1px solid #000;
+                        border-radius: 10px;
+                        padding: 20px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                        font-family: Arial, sans-serif;
+                        font-size: 16px;
+                        z-index: 9999; /* Asegura que la ventana emergente esté por encima de todo */
+                    }
+                
+                    /* Estilo para el fondo borroso */
+                    .fondo-borroso {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro semi-transparente */
+                        backdrop-filter: blur(5px); /* Efecto de desenfoque */
+                        z-index: 9998; /* Asegura que el fondo borroso esté detrás de la ventana emergente */
+                    }
+                
+                    /* Estilo para los botones */
+                    .boton {
+                        color: #fff; /* Color del texto de los botones */
+                        background-color: transparent; /* Fondo transparente para que se vea el fondo de la página */
+                        border: none;
+                        font-size: 16px;
+                        cursor: pointer;
+                    }
+                </style>
+                <script>
+                    function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-input");
+            const searchResults = document.querySelector(".search-results");
+
+            searchInput.addEventListener("input", function() {
+                const inputValue = this.value.toLowerCase().trim();
+                const movieLinks = searchResults.querySelectorAll("a");
+
+                if (inputValue === "") {
+                    searchResults.style.display = "none";
+                    return;
+                }
+
+                movieLinks.forEach(function(link) {
+                    const movieTitle = link.textContent.toLowerCase();
+                    if (movieTitle.includes(inputValue)) {
+                        link.style.display = "block";
+                    } else {
+                        link.style.display = "none";
+                    }
+                });
+
+                searchResults.style.display = "block";
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
+            });
+        });
+        
+
+         function toggleMenu() {
+            document.querySelector('.menu-container').style.display = 'flex';
+        }
+
+        function closeMenu() {
+            document.querySelector('.menu-container').style.display = 'none';
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchItems = searchResults.getElementsByTagName('li');
+
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            let hasResults = false;
+            if (filter) {
+                for (let i = 0; i < searchItems.length; i++) {
+                    const txtValue = searchItems[i].textContent || searchItems[i].innerText;
+                    if (txtValue.toLowerCase().includes(filter)) {
+                        searchItems[i].style.display = "";
+                        hasResults = true;
+                    } else {
+                        searchItems[i].style.display = "none";
+                    }
+                }
+            } else {
+                for (let i = 0; i < searchItems.length; i++) {
+                    searchItems[i].style.display = "none";
+                }
+            }
+            searchResults.style.display = hasResults ? "block" : "none";
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.search-container')) {
+                searchResults.style.display = "none";
+            }
+        });
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-input");
+            const searchResults = document.querySelector(".search-results");
+
+            searchInput.addEventListener("input", function() {
+                const inputValue = this.value.toLowerCase().trim();
+                const movieLinks = searchResults.querySelectorAll("a");
+
+                if (inputValue === "") {
+                    searchResults.style.display = "none";
+                    return;
+                }
+
+                movieLinks.forEach(function(link) {
+                    const movieTitle = link.textContent.toLowerCase();
+                    if (movieTitle.includes(inputValue)) {
+                        link.style.display = "block";
+                    } else {
+                        link.style.display = "none";
+                    }
+                });
+
+                searchResults.style.display = "block";
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
+            });
+        });
+        
+                function abrirVentana(descripcion) {
+                    // Crear la ventana emergente y el fondo borroso
+                    var ventanaEmergente = document.createElement('div');
+                    ventanaEmergente.className = 'ventana-emergente';
+                    ventanaEmergente.innerHTML = '<button onclick="cerrarVentana()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: white; font-size: 20px; cursor: pointer;">X</button>' + descripcion;
+                    var fondoBorroso = document.createElement('div');
+                    fondoBorroso.className = 'fondo-borroso';
+                
+                    // Agregar la ventana emergente y el fondo borroso al body
+                    document.body.appendChild(fondoBorroso);
+                    document.body.appendChild(ventanaEmergente);
+                }
+                
+                function cerrarVentana() {
+                    // Remover la ventana emergente y el fondo borroso
+                    var ventanaEmergente = document.querySelector('.ventana-emergente');
+                    var fondoBorroso = document.querySelector('.fondo-borroso');
+                    ventanaEmergente.parentNode.removeChild(ventanaEmergente);
+                    fondoBorroso.parentNode.removeChild(fondoBorroso);
+                }
+                </script>
+                </head>
+                <body>
+                
+                    
+               
+                </body>
+                </html>
+                <br>
+                 <br><br><br><p class="idioma">  </p>
+            
+        </div>
+    </footer>
+   
+</body>
+</html>

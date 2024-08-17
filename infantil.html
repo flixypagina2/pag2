@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <title> Infantil</title>
+    <style>
+        /* Estilos para la barra de navegación */
+        .header {
+            background-color: #0e0d0d;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .secciones-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            width: 0;
+            opacity: 0;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        .search-container:hover .search-input,
+        .search-input:focus {
+            width: 210px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ee0b0b;
+        }
+
+        /* Estilos para las sugerencias de búsqueda */
+        .search-results {
+            position: absolute;
+            top: 130%;
+            left: 0;
+            width: 210px;
+            background-color: rgba(43, 41, 41, 0.575);
+            border: 1px solid #3b313179;
+            border-top: none;
+            display: none;
+            box-shadow: 0 2px 4px rgba(168, 166, 166, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            
+        }
+
+        .search-results ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.37);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-results li:hover {
+            background-color: rgba(255, 0, 0, 0.534);
+        }
+
+        .search-results a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .menu-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .menu-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(8, 8, 8, 0.452);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #e50914;
+        }
+
+        .item {
+            margin: 1px;
+            border-radius: 0;
+        }
+
+        .item-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+         /* Estilos de la paginación */
+         .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination button {
+            background-color: #e2232c00;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #ff0404;
+            transform: translateY(-3px);
+        }
+
+        .pagination button:focus {
+            outline: none;
+        }
+
+        /* Estilo para el número de página actual */
+        .current-page {
+            color: #e50914;
+            font-weight: bold;
+        }
+
+        /* Estilo para los iconos */
+        .pagination button i {
+            margin-right: 5px;
+        }
+
+        .total-pages{
+        color: #ffffff;
+            font-weight: bold;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Header -->
+    <main>            
+        <div class="content-all">
+            <header class="header">
+                <button class="secciones-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <a href="inicio.html"><img src="img/Flixy-logo.gif" alt="Logo de películas"></a>
+                </div>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar..." id="searchInput">
+                    <i class="fas fa-search search-icon"></i>
+                    <div class="search-results" id="searchResults">
+                        <ul>
+			    <li><a href="Infantil/Chicken Little.html">Chicken Little </a></li>
+                            <li><a href="Infantil/Monster house La casa de los sustos.html">Monster house La casa de los sustos </a></li>
+				<li><a href="Infantil/Sin tiempo para espiar Una peli de Una casa de locos.html">Loud House: No Hay Tiempo para Espiar </a></li>
+                            <li><a href="Infantil/Aguila y jaguar los guerreros legendarios.html">Aguila y jaguar los guerreros legendarios </a></li>
+                            <li><a href="Infantil/Lunatico.html">Lunatico </a></li>
+                            <li><a href="Infantil/Gnomos al Ataque.html">Gnomos al Ataque </a></li>
+                            <li><a href="Infantil/Kung fu Panda 4.html">Kung fu Panda 4 </a></li>
+                            <li><a href="Infantil/tortugas Ninja  Caos mutante.html">tortugas Ninja  Caos mutante </a></li>
+                            <li><a href="Infantil/Megamente contra el sindicato de Doom.html">tortugas Ninja  Caos mutante </a></li>
+                            <li><a href="Infantil/Los Casagrande.html">tortugas Ninja  Caos mutante </a></li>
+                            <li><a href="Infantil/Teoría popular.html">Teoría popular </a></li>
+                            <li><a href="Infantil/Tarta de Fresa y la bestia del cenagal.html">Tarta de Fresa y la bestia del cenagal </a></li>
+                            <li><a href="Infantil/Boonie Bears Codigo Guardian.html">Boonie Bears Codigo Guardian </a></li>
+                            <li><a href="Infantil/Migración. Un viaje patas arriba.html">Migración. Un viaje patas arriba (patos) </a></li>
+                            <li><a href="Infantil/Super mario Bross.html">Super mario Bross: La pelicula </a></li>
+                            <li><a href="Infantil/trolls 3.html">trolls 3 </a></li>
+                            <li><a href="Infantil/Wish El poder de los deseos.html">Wish El poder de los deseos.html </a></li>
+                            <li><a href="Infantil/Chicken Run Amanecer de los nuggets.html">Chicken Run Amanecer de los nuggets </a></li>
+                            <li><a href="Infantil/El Mundo Miraculous Shanghái la leyenda de LadyDragon.html">El Mundo Miraculous Shanghái la leyenda de LadyDragon </a></li>
+                            <li><a href="Infantil/Soul.html">Soul </a></li>
+                            <li><a href="Infantil/Dragon Nest Guardianes del Amanecer.html">Dragon Nest Guardianes del Amanecer </a></li>
+                            <li><a href="Infantil/Yo soy groot.html">Dragon Nest Guardianes del Amanecer </a></li>
+                            <li><a href="Infantil/Mavka Guardiana del bosque.html">Mavka Guardiana del bosque </a></li>
+                            <li><a href="Infantil/gato con botas ultimo dese.html">gato con botas ultimo dese </a></li>
+                            <li><a href="Infantil/Megamind contra el sindicato del mal.html">Megamente contra el sindicato del mal </a></li>
+                            <li><a href="Infantil/Dora ¡Di hello a la aventura!.html">Dora ¡Di hello a la aventura! </a></li>
+                            <li><a href="Infantil/Ruby, aventuras de una kraken adolescente.html">Ruby, aventuras de una kraken adolescente </a></li>
+                            <li><a href="Infantil/Las momias y el anillo perdido.html">Las momias y el anillo perdido </a></li>
+                            <li><a href="Infantil/Los Casagrande La película.html">Los Casagrande La película </a></li>
+                            <li><a href="Infantil/Luca.html">Luca </a></li>
+                            <li><a href="Infantil/El Pájaro Loco se va de campamento.html">El Pájaro Loco se va de campamento </a></li>
+                            <li><a href="Infantil/Snoopy presenta Bienvenido a casa, Franklin.html">Snoopy presenta Bienvenido a casa, Franklin </a></li>
+                            <li><a href="Infantil/Miniespías Armagedón.html">Miniespías: Armagedón </a></li>
+                            <li><a href="Infantil/Unicorn Wars.html">Unicorn Wars </a></li>
+                            <li><a href="Infantil/Space Jam Nuevas Leyendas.html">Space Jam Nuevas Leyendas </a></li>
+                            <li><a href="Infantil/Coraline y la puerta secreta.html">Coraline y la puerta secreta </a></li>
+                            <li><a href="Infantil/Frozen 2.html">Frozen 2 </a></li>
+                            <li><a href="Infantil/Kung Fu Panda 3.html">Kung Fu Panda 3 </a></li>
+                            <li><a href="Infantil/Kung Fu Panda.html">Kung Fu Panda  </a></li>
+                            <li><a href="Infantil/Kung Fu Panda 2.html">Kung Fu Panda 2 </a></li>
+                            <li><a href="Infantil/Iwaju.html">Iwaju </a></li>
+                            <li><a href="Infantil/Fixies Amigos secretos.html">Fixies Amigos secretos </a></li>
+                            <li><a href="Infantil/La leyenda del Charro Negro.html">La leyenda del charro negro </a></li>
+                            <li><a href="Infantil/Condorito La película.html">Condorito La película </a></li>
+                            <li><a href="Infantil/Baby Shark, La Gran Película.html">Baby Shark, La Gran Película</a></li>
+                            <li><a href="Infantil/Robot 7723.html">Robot 7723</a></li>
+                            <li><a href="Infantil/La Navidad de Ángela.html">La Navidad de Ángela</a></li>
+                            <li><a href="Infantil/Telma La Unicornio.html">La Navidad de Ángela</a></li>
+                            <li><a href="Infantil/Legión de superhéroes.html">Legión de superhéroes</a></li>
+                            <li><a href="Infantil/Elemental.html">Elemental</a></li>
+                            <li><a href="Infantil/Spirit El Corcel Indomable.html">Spirit: El Corcel Indomable</a></li>
+                            <li><a href="Infantil/IntensaMente 2.html">IntensaMente 2</a></li>
+                            <li><a href="Infantil/Ultraman El ascenso.html" >Ultraman El ascenso </a></li>
+                            <li><a href="Infantil/Mi villano favorito 4.html" >Mi villano favorito 4 </a></li>
+			    <li><a href="Infantil/Amigos imaginarios.html">Amigos imaginarios </a></li>
+			    <li><a href="Infantil/Bajo el muelle.html">Bajo el muelle </a></li>
+			    <li><a href="Infantil/Corre, Tiger, corre.html">Corre, Tiger, corre </a></li>
+                            <li><a href="Infantil/Tinker Bell.html">Tinker Bell </a></li>
+			    <li><a href="Infantil/Los mundos de Coraline.html">Los mundos de Coraline </a></li>
+			    <li><a href="Infantil/El extra navideño del Bebé Jefazo.html"> El extra navideño del Bebé Jefazo  </a></li>
+                            <li><a href="Infantil/La Tropa Acción salva la Navidad.html"> La Tropa Acción salva la Navidad  </a></li>
+				
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.menu-container').style.display = 'flex';
+        }
+
+        function closeMenu() {
+            document.querySelector('.menu-container').style.display = 'none';
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchItems = searchResults.getElementsByTagName('li');
+
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            let hasResults = false;
+            if (filter) {
+                for (let i = 0; i < searchItems.length; i++) {
+                    const txtValue = searchItems[i].textContent || searchItems[i].innerText;
+                    if (txtValue.toLowerCase().includes(filter)) {
+                        searchItems[i].style.display = "";
+                        hasResults = true;
+                    } else {
+                        searchItems[i].style.display = "none";
+                    }
+                }
+            } else {
+                for (let i = 0; i < searchItems.length; i++) {
+                    searchItems[i].style.display = "none";
+                }
+            }
+            searchResults.style.display = hasResults ? "block" : "none";
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.search-container')) {
+                searchResults.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
+<!-- Mobile Menu Container -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-background" onclick="toggleMenu()"></div>
+                <div class="menu-content">
+                    <ul class="menu">
+                        <li><a href="inicio.html">Inicio</a></li>
+                        <li><a href="Peliculas.html">Películas</a></li>
+                        <li><a href="Comedia.html">Comedia</a></li>
+                        <li><a href="terror.html">Terror</a></li>
+                        <li><a href="infantil.html">Infantil</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-input");
+            const searchResults = document.querySelector(".search-results");
+
+            searchInput.addEventListener("input", function() {
+                const inputValue = this.value.toLowerCase().trim();
+                const movieLinks = searchResults.querySelectorAll("a");
+
+                if (inputValue === "") {
+                    searchResults.style.display = "none";
+                    return;
+                }
+
+                movieLinks.forEach(function(link) {
+                    const movieTitle = link.textContent.toLowerCase();
+                    if (movieTitle.includes(inputValue)) {
+                        link.style.display = "block";
+                    } else {
+                        link.style.display = "none";
+                    }
+                    
+                });
+
+                searchResults.style.display = "block";
+            });
+
+            document.addEventListener("click", function(e) {
+                if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                    searchResults.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+<div class="container">
+	
+    <div class="item">
+        <a href="Infantil/El extra navideño del Bebé Jefazo.html"><img src="Multimedia/Infantil/El extra navideño del Bebé Jefazo.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/La Tropa Acción salva la Navidad.html"><img src="Multimedia/Infantil/La Tropa Acción salva la Navidad.jpg" alt="" class="item-img"></a>
+    </div>
+
+    <div class="item">
+        <a href="Infantil/Los mundos de Coraline.html"><img src="Multimedia/Infantil/Los mundos de Coraline.jpg" alt="" class="item-img"></a>
+    </div>
+	
+    <div class="item">
+        <a href="Infantil/Corre, Tiger, corre.html"><img src="Multimedia/Infantil/Corre, Tiger, corre.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Tinker Bell.html"><img src="Multimedia/Infantil/Tinker Bell.jpg" alt="" class="item-img"></a>
+    </div>
+     <div class="item">
+        <a href="Infantil/Bajo el muelle.html"><img src="Multimedia/Infantil/Bajo el muelle.jpg" alt="" class="item-img"></a>
+     </div>
+                    
+	<div class="item">
+            <a href="Infantil/Amigos imaginarios.html"><img src="Multimedia/Infantil/Amigos imaginarios.jpg" alt="" class="item-img"></a>
+        </div>
+	<div class="item">
+	    <a href="Infantil/Chicken Little.html"><img src="Multimedia/Infantil/Chicken Little.jpg" alt="" class="item-img"></a>
+	</div>
+	
+	<div class="item">
+	    <a href="Infantil/Monster house La casa de los sustos.html"><img src="Multimedia/Infantil/Monster house La casa de los sustos.jpg" alt="" class="item-img"></a>
+	</div> 
+    <div class="item">
+        <a href="Infantil/Sin tiempo para espiar Una peli de Una casa de locos.html"><img src="Multimedia/Infantil/Loud House No Hay Tiempo para Espiar.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Mi villano favorito 4.html"><img src="Multimedia/Infantil/Mi villano favorito 4.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Ultraman El ascenso.html"><img src="Multimedia/Infantil/Ultraman El ascenso.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/IntensaMente 2.html"><img src="Multimedia/Infantil/Intensamente 2.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Spirit El Corcel Indomable.html"><img src="https://image.tmdb.org/t/p/original/gNRQdU3KEsYTIl4y9Xte3onUSsx.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Elemental.html"><img src="https://image.tmdb.org/t/p/original/d79DeKDCgFOM23O8Dr6MELZVooY.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Legión de superhéroes.html"><img src="https://image.tmdb.org/t/p/original/ajU3fCIvT0py0IDw1g6g5e0bNr8.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Telma La Unicornio.html"><img src="https://image.tmdb.org/t/p/original/t2QbM7VgCPMZmSwGMNKuNIiRFZM.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/La Navidad de Ángela.html"><img src="https://image.tmdb.org/t/p/original/tYkuRuEQeTTV85G4mbNGZlUH2QZ.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Robot 7723.html"><img src="https://image.tmdb.org/t/p/original/4tGHL42pC3c5BGt9zt4aSOwLOB2.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Baby Shark, La Gran Película.html"><img src="https://image.tmdb.org/t/p/original/lCijwCyk5uhi7a0G0ICcUZ5hwZi.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Condorito La película.html"><img src="https://image.tmdb.org/t/p/original/A7yTRWLgJdvOFQPhwSJF1s4BwbQ.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/La leyenda del Charro Negro.html"><img src="https://image.tmdb.org/t/p/original/fDLJ5vIeRL68cIHlob11w2pBzH0.jpg" alt="" class="item-img"></a>
+    </div>
+    <div class="item">
+        <a href="Infantil/Fixies Amigos secretos.html"><img src="https://image.tmdb.org/t/p/original/zI1xBDdkOHSdjpJUd57oOCIeUVi.jpg" alt="" class="item-img"></a>
+    </div> 
+    <div class="item">
+        <a href="Infantil/Iwaju.html"><img src="https://image.tmdb.org/t/p/original/hMm4jr9B63lFjnuMBxgQGP2mYAq.jpg" alt="" class="item-img"></a>
+    </div> 
+    <div class="item">
+        <a href="Infantil/Kung Fu Panda.html"><img src="https://image.tmdb.org/t/p/original/wzOERnvuM3c2mbAvCu5pw1QIaZX.jpg" alt="" class="item-img"></a>
+    </div> 
+    <div class="item">
+        <a href="Infantil/Kung Fu Panda 2.html.html"><img src="https://image.tmdb.org/t/p/original/aNji9U9SPTecmoqGippQUBEyouy.jpg" alt="" class="item-img"></a>
+    </div>  
+    <div class="item">
+        <a href="Infantil/Kung Fu Panda 3.html"><img src="https://image.tmdb.org/t/p/original/t11f8palNbICK9Ip5QLrUfhLJYq.jpg" alt="" class="item-img"></a>
+    </div>        
+    <div class="item">
+        <a href="Infantil/Frozen 2.html"><img src="https://image.tmdb.org/t/p/original/jnFCk7qGGWop2DgfnJXeKLZFuBq.jpg" alt="" class="item-img"></a>
+    </div>    
+            <div class="item">
+                <a href="Infantil/Coraline y la puerta secreta.html"><img src="https://image.tmdb.org/t/p/original/sYXXUeSrx9TBbFpbgtLklW5kmVR.jpg" alt="" class="item-img"></a>
+            </div>
+            <div class="item">
+				<a href="Infantil/Space Jam Nuevas Leyendas.html"><img src="https://image.tmdb.org/t/p/original/iXufBQ4S7KqSVd8vy7n1AKhxLqP.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Unicorn Wars.html"><img src="https://image.tmdb.org/t/p/original/bLm7AM8UQmUZGOIlYiwATusY42L.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Miniespías Armagedón.html"><img src="https://image.tmdb.org/t/p/original/juWq5f91rhWrxVThNwdpbhRLoQK.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Snoopy presenta Bienvenido a casa, Franklin.html"><img src="https://image.tmdb.org/t/p/original/aTpSP0gl5X5UNG8q3ptbfklEFuf.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/El Pájaro Loco se va de campamento.html"><img src="https://image.tmdb.org/t/p/original/dlLyYYKH4q52OnDZsxcDo2uECRl.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Luca.html"><img src="https://image.tmdb.org/t/p/original/nvILfxzIboLOq9deUK9m58Y8l8E.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Las momias y el anillo perdido.html"><img src="https://image.tmdb.org/t/p/original/yyZENVe5AYLiE12HHRYrySvQMTk.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Ruby, aventuras de una kraken adolescente.html"><img src="https://image.tmdb.org/t/p/original/8v37EBiR2HWb1d6gYpRzyR00c19.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Dora ¡Di hello a la aventura!.html"><img src="https://image.tmdb.org/t/p/original/bDKiaNOzNgVykHOrWgAwsjzmZbr.jpg" alt="" class="item-img"></a>
+			</div>
+               
+            <div class="item">
+				<a href="Infantil/gato con botas ultimo dese.html"><img src="https://image.tmdb.org/t/p/original/b5Jb7GoQaqIXy4VEdnQa0UrQZI.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Mavka Guardiana del bosque.html"><img src="https://image.tmdb.org/t/p/original/6EJUEeC9dQglAJhLqluX70hE7Xs.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Yo soy groot.html"><img src="https://image.tmdb.org/t/p/original/mAW22zvybqCo9PeLkUfwYdB4wZu.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Soul.html"><img src="https://image.tmdb.org/t/p/original/xJ7MCAy4oCLerPo3JjnB8lKOhl4.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/Aguila y jaguar los guerreros legendarios.html"><img src="https://image.tmdb.org/t/p/original/6qR9WbXYIddZcVk6nxFULfHcKmK.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Lunatico.html"><img src="https://image.tmdb.org/t/p/original/h1dqfREMwNsRXffIV9Kqht88PKA.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Gnomos al Ataque.html"><img src="https://image.tmdb.org/t/p/original/ljwpX7zSWAG5BRG9AIKliWVLQyL.jpg" alt="" class="item-img"></a>
+			</div>
+
+			<div class="item">
+				<a href="Infantil/Kung fu Panda 4.html"><img src="https://image.tmdb.org/t/p/original/bqe5pdLIoLeZSszA8N5ZvoIS4aB.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/tortugas Ninja  Caos mutante.html"><img src="https://image.tmdb.org/t/p/original/tS1ogVpl1Ic3nf9iGWiWCuNTw3g.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Megamind contra el sindicato del mal.html"><img src="https://image.tmdb.org/t/p/original/jf0VOTuKY2UUqK8NtXrxhtY9CVP.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Los Casagrande.html"><img src="https://image.tmdb.org/t/p/original/bmlc6pDNKrkcnOjLAcoaNKqITaE.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Teoría popular.html"><img src="https://image.tmdb.org/t/p/original/AgmmOYxb013TGeXfR5EHeqJV7Nu.jpg    " alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Tarta de Fresa y la bestia del cenagal.html"><img src="https://image.tmdb.org/t/p/original/4zsrLV8H1fvZIai7KIA4MzI0hBB.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Boonie Bears Codigo Guardian.html"><img src="https://image.tmdb.org/t/p/original/9LCQpgnvWjR37o4vVcLrh0OJJF2.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Migración. Un viaje patas arriba.html"><img src="https://image.tmdb.org/t/p/original/diEeiB2DmZZadHISkg24RO2n0rT.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Super mario Bross.html"><img src="https://image.tmdb.org/t/p/original/4CDkQMpNDTtVKwS0BBZw5RIXDtY.jpg" alt="" class="item-img"></a>
+			</div>
+            <div class="item">
+				<a href="Infantil/trolls 3.html"><img src="https://image.tmdb.org/t/p/original/yco6dWR1W3iANUEKxGT0vQRWrJn.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Wish El poder de los deseos.html"><img src="https://image.tmdb.org/t/p/original/1VXMrUioKfPAPSsezHKexx77Dbz.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/Chicken Run Amanecer de los nuggets.html"><img src="https://image.tmdb.org/t/p/original/rCRpJowZyyYRUSQrUqUrfRmCoAe.jpg" alt="" class="item-img"></a>
+			</div>
+
+            <div class="item">
+				<a href="Infantil/El Mundo Miraculous Shanghái la leyenda de LadyDragon.html    "><img src="https://image.tmdb.org/t/p/original/6bsattcXstExFU0JMTy2Jjs4CYr.jpg" alt="" class="item-img"></a>
+			</div>
+            
+            <div class="item">
+				<a href="Infantil/Dragon Nest Guardianes del Amanecer.html"><img src="https://image.tmdb.org/t/p/original/8fklM49dK7AZ3j8jgycxbRwECGa.jpg" alt="" class="item-img"></a>
+			</div>
+		</div> 
+            <!-- Paginación -->
+        <div class="pagination">
+            <button onclick="previousPage()" class="netflix-button"><i class="fas fa-chevron-left"></i> </button>
+            <span class="current-page" id="currentPage">1</span> - <span class="total-pages" id="totalPages">1</span>
+            <button onclick="nextPage()" class="netflix-button"> <i class="fas fa-chevron-right"></i></button>
+        </div>
+    
+        <script>
+            let moviesPerPage = 50; // Número de películas por página por defecto
+            let currentPage = 1; // Página actual, inicializada en 1
+    
+            // Función para mostrar las películas de la página actual
+            function showMovies(page) {
+                const items = document.querySelectorAll('.item');
+                const startIndex = (page - 1) * moviesPerPage;
+                const endIndex = page * moviesPerPage;
+    
+                items.forEach((item, index) => {
+                    if (index >= startIndex && index < endIndex) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+    
+            // Función para ir a la página anterior
+            function previousPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    document.getElementById('currentPage').textContent = currentPage;
+                    showMovies(currentPage);
+                }
+            }
+    
+            // Función para ir a la página siguiente
+            function nextPage() {
+                const totalMovies = document.querySelectorAll('.item').length;
+                const totalPages = Math.ceil(totalMovies / moviesPerPage);
+    
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    document.getElementById('currentPage').textContent = currentPage;
+                    showMovies(currentPage);
+                }
+            }
+    
+            // Mostrar las películas de la primera página al cargar la página
+            document.addEventListener('DOMContentLoaded', () => {
+                // Ajustar el número de películas por página en dispositivos móviles
+                if (window.innerWidth <= 768) {
+                    moviesPerPage = 52;
+                }
+    
+                showMovies(currentPage);
+                const totalMovies = document.querySelectorAll('.item').length;
+                const totalPages = Math.ceil(totalMovies / moviesPerPage);
+                document.getElementById('totalPages').textContent = totalPages;
+            });
+    
+            // Reajustar el número de películas por página cuando la ventana cambie de tamaño
+            window.addEventListener('resize', () => {
+                if (window.innerWidth <= 768) {
+                    moviesPerPage = 52;
+                } else {
+                    moviesPerPage = 40;
+                }
+    
+                showMovies(currentPage);
+                const totalMovies = document.querySelectorAll('.item').length;
+                const totalPages = Math.ceil(totalMovies / moviesPerPage);
+                document.getElementById('totalPages').textContent = totalPages;
+            });
+        </script>
+    </body>
+    </html>
