@@ -54,22 +54,24 @@
 
 		<style type="text/css"> 
 			#banner{
-				background-image: url('https://image.tmdb.org/t/p/original/A7MEYn25BeGGrleczbCLNaNb9D1.jpg'); 
-                margin-top: 40px;
+				background-image: url('https://image.tmdb.org/t/p/original/hoBQ9QccMdPGoI11cbTFKGVETp0.jpg'); 
+                margin-top: 10px;
 			}		
 		</style>
 	</head>
 	<body>
 		<div class="banner" id="banner">
 			<div class="banner-contenedor">
-				<center><h1 class="banner-titulo"> Tornados  </h1>
+				<center><h1 class="banner-titulo">  Nadie te salvará   </h1>
 				<div class="botones">
-					1080 <button class="hd"> HD </button>
+					1080<button class="hd"> HD</button>
 				</div>
 				<div class="banner-sinopsis">
-                    Kate Carter, una ex cazadora de tormentas perseguida por un devastador encuentro con un tornado, es llamada por su amigo Javi de regreso a las llanuras para probar un nuevo e innovador sistema de seguimiento. 
+                    Brynn es una joven brillante que vive apartada de un vecindario que la ha aislado. Solitaria pero optimista, encuentra consuelo en el hogar donde creció, hasta que unos extraños ruidos la despiertan en mitad de la noche.
 
-				</div></center>
+
+
+                </div></center>
 			</div>
 
 			<div class="banner-fadeBottom"></div>
@@ -79,10 +81,10 @@
 		 <div class="video-contenedor">
 			<center>
 				<div class="descarga">
-                    
-					<button type="button" class="btn-descarga" onclick="playVideo('https://wishonly.site/e/eqbunjl8n1wi')"><i class=""></i>Ver película
+					<button type="button" class="btn-descarga" onclick="playVideo('https://wishonly.site/e/552im6lmivpa')">
+						<i class=""></i>Ver película
 					</button>
-                    <button type="button" class="btn-descarga" onclick="window.location.href='https://uii.io/VBA7C'"> Descargar
+                    <button type="button" class="btn-descarga" onclick="window.location.href='https://uii.io/TgVEJUsY'"> Descargar
 					</button>
 				</div>
 				
@@ -92,37 +94,49 @@
 
 		<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
-        <!-- Contenedor del reproductor en pantalla completa -->
-     <div class="fullscreen-player" id="fullscreen-player">
+    <!-- Contenedor del reproductor en pantalla completa -->
+    <div class="fullscreen-player" id="fullscreen-player">
         <div class="video-container">
             <span class="close-button" onclick="closeFullscreenPlayer()">cerrar</span>
-            <iframe id="chapter-player" src="" scrolling="no" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" poster="data:" ></iframe>
+            <iframe id="chapter-player" src="" scrolling="no" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  poster="data:"></iframe>
         </div>
     </div>
     
-    
-    <!-- Script para el comportamiento del botón de reproducción y cierre del reproductor -->
-    <script>
-        // Función para reproducir el video en el reproductor en pantalla completa
-        function playVideo(videoUrl) {
-            var player = document.getElementById('chapter-player');
-            player.src = videoUrl;
-            openFullscreenPlayer();
-        }
 
-        // Función para mostrar el reproductor en pantalla completa
-        function openFullscreenPlayer() {
-            var fullscreenPlayer = document.getElementById('fullscreen-player');
-            fullscreenPlayer.style.display = 'block';
-        }
 
-        // Función para cerrar el reproductor en pantalla completa
-        function closeFullscreenPlayer() {
-            var fullscreenPlayer = document.getElementById('fullscreen-player');
-            fullscreenPlayer.style.display = 'none';
-            var player = document.getElementById('chapter-player');
-            player.src = ''; // Detener la reproducción del video
-        }
+<!-- Script para el comportamiento del botón de reproducción y cierre del reproductor -->
+<script>
+    // Función para reproducir el video en el reproductor en pantalla completa
+    function playVideo(videoUrl) {
+        var player = document.getElementById('chapter-player');
+        player.src = videoUrl;
+        openFullscreenPlayer();
+    }
+
+    // Función para mostrar el reproductor en pantalla completa
+    function openFullscreenPlayer() {
+        var fullscreenPlayer = document.getElementById('fullscreen-player');
+        fullscreenPlayer.style.display = 'block';
+    }
+
+    // Función para cerrar el reproductor en pantalla completa
+    function closeFullscreenPlayer() {
+        var fullscreenPlayer = document.getElementById('fullscreen-player');
+        fullscreenPlayer.style.display = 'none';
+        var player = document.getElementById('chapter-player');
+        player.src = ''; // Detener la reproducción del video
+    }
+    // Función para detectar la apertura del panel de desarrollador y redirigir a google.com
+    (function() {
+        const threshold = 160;
+        const detectDevTools = function() {
+            if (window.outerHeight - window.innerHeight > threshold ||
+                window.outerWidth - window.innerWidth > threshold) {
+                window.location.href = 'https://www.google.com';
+            }
+        };
+        setInterval(detectDevTools, 1000);
+    })();
     </script>
 	<div>
 
