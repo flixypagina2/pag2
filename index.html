@@ -3,136 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flixy </title>
+    <title>Flixy</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://img.freepik.com/fotos-premium/primer-plano-carrete-pelicula-sobre-fondo-oscuro-tira-pelicula-extendiendose-lista-ser-proyectada-pantalla-generado-ai_727385-1802.jpg');
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.893), rgba(0, 0, 0, 0) 100%), url('https://www.cronista.com/files/image/506/506181/63c94f06a5588.jpg');
             background-size: cover;
             background-position: center;
-            color: #fff; /* Color del texto sobre la imagen de fondo */
+            color: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Mínimo alto de la pantalla visible */
-            background-color: rgba(66, 66, 66, 0.322); /* Fondo semitransparente */
-            border-radius: 10px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0px 1px 19px 0px rgba(255, 0, 0, 0.164);
+            min-height: 100vh;
+            box-sizing: border-box;
+            backdrop-filter: blur(15px);
             
+        }
+
+        .menu {
+            width: 100%;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .menu a, .menu button {
+            color: #fff;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .menu a:hover, .menu button:hover {
+            background-color: #333;
         }
 
         .container {
-            text-align: center;
-            max-width: 800px; /* Ancho máximo del contenido */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
             padding: 20px;
-            margin: 0 auto; /* Centrar el contenido horizontalmente */
-            background-color: rgba(0, 0, 0, 0.626); /* Fondo semitransparente */
-            border-radius: 10px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0px 1px 19px 0px rgba(255, 0, 0, 0.164);
+            margin-top: 50px;
+            
         }
-        
 
         .logo-container {
-            margin-bottom: 20px;
+            text-align: center;
         }
 
         .logo-container img {
-            max-width: 100%; /* Imágenes responsivas */
+            max-width: 100%;
             height: auto;
-            width: 200PX;
+            width: 200px;
             
         }
 
-        .description {
-            margin-bottom: 2px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0); /* Fondo semitransparente */
+        .left-image {
+            position: fixed;
+            left: 89px;
+            top: 70%;
+            transform: translateY(-50%);
+            margin-left: 2px;
+            padding: 20px;
+            border-radius: 10px;
         }
 
-        .description p {
+        .left-image img {
+            width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            
+        }
+
+        .right-info {
+            position: fixed;
+            right: 0;
+            top: 66%;
+            transform: translateY(-50%);
+            margin-right: 134px;
+            text-align: center;
+            color: #fff;
+            
+        }
+
+        .right-info p {
             margin: 0;
+            font-size: 16px;
+            max-width: 430px;
+            margin-bottom: 10px;
+            
+            
         }
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .button {
-            position: relative;
-        }
-
-        .button button {
-            padding: 10px 20px; /* Ajuste de tamaño más pequeño */
+        .right-info button {
+            padding: 10px 20px;
             background-color: #e50914;
             color: #fff;
             border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 14px; /* Tamaño de fuente más pequeño */
-            border-radius: 5px;
             transition: background-color 0.3s;
-        }
-
-        .button button:hover {
-            background-color: #b30710;
-        }
-
-        .dropdown {
-            position: absolute;
-            top: calc(100% + 26px);
-            left: 50%;
-            transform: translateX(-50%) scaleY(0);
-            transform-origin: top center;
-            min-width: 36px;
-            box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.432);
-            z-index: 1;
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            border-radius: 5px;
-            overflow: hidden;
-            backdrop-filter: blur(10px); /* Efecto de fondo estilo vidrio */
-            background-color: rgba(18, 18, 18, 0.85); /* Transparencia del fondo */
+            
+            
             
         }
 
-        .dropdown.active {
-            transform: translateX(-50%) scaleY(1);
-            opacity: 1;
-        }
-
-        .dropdown a {
-            display: block;
-            padding: 12px 16px;
-            text-decoration: none;
-            color: #ffffff;
-            transition: background-color 0.3s;
-        }
-
-        .dropdown a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown.active a:hover {
+        .right-info button:hover {
             background-color: #b30710;
-            color: #0c0b0b;
         }
 
         .footer {
-            background-color: rgba(26, 26, 26, 0);
-            padding: 10px;
+            background-color: #000;
+            padding: 1px;
             text-align: center;
-            width: auto;
-            position: absolute;
-            bottom: 0;
-            backdrop-filter: blur(1px);
+            width: 400px;
+            margin-top: auto; /* Asegura que el footer se mantenga en la parte inferior */
+            
         }
 
         .footer p {
@@ -143,106 +142,391 @@
         .footer a {
             color: #fff;
             text-decoration: underline;
-            margin-left: 5px;
         }
 
-        .buttonn a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #e50914;
+        /* Estilos para la ventana modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            
+            
+        }
+
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #333;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+            
+        }
+
+        .modal-content a {
+            display: block;
+            margin: 10px 0;
             color: #fff;
             text-decoration: none;
-            border-radius: 5px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .modal-content .downloads {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .modal-content .downloads a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            background-color: #444;
+            border-radius: 10px;
+            margin: 0 10px;
             transition: background-color 0.3s;
         }
 
-        .buttonn a:hover {
-            background-color: #b30710;
+        .modal-content .downloads a img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
         }
 
-    
+        .modal-content .downloads a:hover {
+            background-color: #555;
+        }
 
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+       /* Estilos para la ventana modal */
+       .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.618);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            
+        }
+
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #0f0f0f7e;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            backdrop-filter: 30px;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content a {
+            display: block;
+            margin: 10px 0;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content .downloads {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .modal-content .downloads a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            background-color: #444;
+            border-radius: 10px;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content .downloads a img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content .downloads a:hover {
+            background-color: #555;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos para íconos de redes más pequeños */
+        .modal-content a img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        /* Estilos para los enlaces en el modal de redes */
+        .modal-content a {
+            color: #fff; /* Color de texto predeterminado */
+            transition: color 0.3s; /* Transición suave para el cambio de color */
+        }
+
+        .modal-content a:hover {
+            color: #e50914; /* Color rojo al pasar el mouse */
+        }
+        .separator {
+            width: 1px; /* Ancho de la línea blanca */
+            height: calc(50vh - 100px); /* Ajustar altura según sea necesario */
+            background-color: #fff; /* Color de la línea blanca */
+            position: fixed;
+            left: 674px; /* Ajustar según el ancho de la imagen y el margen */
+            top: 65%;
+            transform: translateY(-50%);
+            
+        }
         
+        @media (max-width: 667px) {
+            .left-image, .right-info {
+                position: static;
+                width: 100%;
+                text-align: center;
+                margin: 0px 0;
+                margin-top: 98px; /* Ajusta el valor según sea necesario */
+            }
+
+            .left-image img, .right-info img {
+                width: 100%;
+                height: auto;
+            }
+
+            .separator {
+                display: none;
+            }
+
+            .modal-content .downloads {
+                flex-direction: column;
+            }
+
+            .modal-content .downloads a {
+                width: 80px;
+                height: 80px;
+            }
+
+            .modal-content .downloads a img {
+                width: 30px;
+                height: 30px;
+            }
+            .footer p {
+                width: 10px;
+            }
+            .right-info {
+                margin: -4px ;
+            
+            }
+            
+        }
     </style>
 </head>
 <body>
+    <!-- Menú de navegación superior -->
+    <div class="menu">
+        <a href="ayuda.html">Ayuda</a>
+        
+        <!-- Botón de Redes que abre el modal -->
+        <button id="btn-redes">Redes</button>
+        <!-- Botón de Descargas con dropdown -->
+        <button id="btn-descargas">Descargas</button>
+    </div>
+
     <div class="container">
+        <!-- Contenedor del Logo -->
         <div class="logo-container">
-            <img src="img/Flixy-logo.gif" alt="Logo Netflix">
+            <img src="img/loguito-fotor-202408210233.png" alt="Logo Netflix">
         </div>
-        <div class="description">
-            <p>Bienvenido a Flixy, donde podrás encontrar   <br>
-                una gran coleccion de películas y series. <br>
-                 en HD, español e idioma original
+    </div>
+
+    <!-- Imagen en el lado izquierdo centrado con fondo degradado -->
+    <div class="left-image">
+        <img src="img/weeeb.gif" alt="Imagen en el lado izquierdo">
+       <center> <p>TV, PC y Android</p> </center>
+    </div>
+    <div class="separator"></div>
+
+    <!-- Descripción y botón en el lado derecho -->
+    <div class="right-info">
+        <p>Estamos encantados de que te unas a Flixy. Aquí tendrás acceso a una amplia y cuidada selección de películas y series, disponibles tanto en español e idioma original. </p>
+        <p>Disfruta explorando nuestro catálogo y encuentra lo mejor del entretenimiento a tu alcance.</p>
+        <p>&copy; 2024 derechos reservados.</p>
+        <br>
+        <button onclick="window.location.href='inicio.html'">Iniciar </button>
+    </div>
+
+    
+
+    <!-- Ventana Modal de Redes -->
+    <div id="modal-redes" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <a href="https://web.facebook.com/profile.php?id=61556337333658">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+                Facebook
+            </a>
+            <a href="https://t.me/flixy_oficial">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+                Telegram
+            </a>
+            <a href="">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
+                YouTube
+            </a>
         </div>
-        <div class="buttons">
-            <div class="buttonn">
-                <a href="inicio.html" id="btn-continuar">Iniciar</a>
-            </div>
-            <div class="button">
-                <button id="btn-descargar">Descargas</button>
-                <div class="dropdown" id="dropdown-descargar">
-                    <a href="https://download2298.mediafire.com/xsqtzj4ilszgHnFmvLdA9IIxyW9JV1tIuJcnqJwjl65ZsvxDzjU_80jHo80zZfoPHqr7MoHoAiKBsDpqzIpxaBfOiXIjQpJBBWPAHFejBTItLv_jhj89NDw107nrdultX57lstaKsyluomJB6QwrwuO1lAvgdU8Qfq3gS2L4XfU/z0sxogi4mbdn73v/Flixy.apk">Android</a>
-                    <a href="https://download2298.mediafire.com/xsqtzj4ilszgHnFmvLdA9IIxyW9JV1tIuJcnqJwjl65ZsvxDzjU_80jHo80zZfoPHqr7MoHoAiKBsDpqzIpxaBfOiXIjQpJBBWPAHFejBTItLv_jhj89NDw107nrdultX57lstaKsyluomJB6QwrwuO1lAvgdU8Qfq3gS2L4XfU/z0sxogi4mbdn73v/Flixy.apk">TV box</a>
-                </div>
-            </div>
-            <div class="button">
-                <button id="btn-redes">Redes</button>
-                <div class="dropdown" id="dropdown-redes">
-                    <a href="https://t.me/flixy_oficial"> C.Telegram</a>
-                    <a href="https://t.me/flixy_peliculas"> G.Telegram</a>
-                </div>
+    </div>
+
+    <!-- Ventana Modal de Descargas -->
+    <div id="modal-descargas" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="downloads">
+                <a href="https://www.mediafire.com/">
+                    <img src="https://e7.pngegg.com/pngimages/116/783/png-clipart-android-logo-android-text-logo.png" alt="MediaFire">
+                    Android
+                </a>
+                <a href="https://mega.nz/">
+                    <img src="https://w7.pngwing.com/pngs/1004/75/png-transparent-logo-tv-television-channel-this-tv-tv-shows-miscellaneous-television-heart-thumbnail.png" alt="Mega">
+                    Tv Box
+                </a>
             </div>
         </div>
     </div>
-    
 
     <div class="footer">
-        <p>&copy; 2024 Todos los derechos reservados. </p>
+        
     </div>
 
     <script>
-        // Función para cerrar todos los dropdowns activos excepto el actual
-        function closeAllDropdowns(exceptDropdownId) {
-            document.querySelectorAll('.dropdown').forEach(function(dropdown) {
-                if (dropdown.id !== exceptDropdownId && dropdown.classList.contains('active')) {
-                    dropdown.classList.remove('active');
-                }
-            });
+        // Obtener los modales
+        var modalRedes = document.getElementById("modal-redes");
+        var modalDescargas = document.getElementById("modal-descargas");
+
+        // Obtener los botones que abren los modales
+        var btnRedes = document.getElementById("btn-redes");
+        var btnDescargas = document.getElementById("btn-descargas");
+
+        // Obtener los elementos <span> que cierran los modales
+        var closeButtons = document.getElementsByClassName("close");
+
+        // Función para abrir modal con animación
+        function openModal(modal) {
+            modal.classList.add("show");
         }
 
-        // Función para mostrar y ocultar los submenús de forma independiente
-        function toggleDropdown(dropdownId) {
-            var dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle('active');
-            closeAllDropdowns(dropdownId); // Cierra otros dropdowns activos
+        // Función para cerrar modal con animación
+        function closeModal(modal) {
+            modal.classList.remove("show");
         }
 
-        // Event listeners para los botones "Descargar" y "Redes"
-        document.getElementById("btn-descargar").addEventListener("click", function() {
-            toggleDropdown('dropdown-descargar');
-        });
+        // Abrir modal de Redes
+        btnRedes.onclick = function() {
+            openModal(modalRedes);
+        }
 
-        document.getElementById("btn-redes").addEventListener("click", function() {
-            toggleDropdown('dropdown-redes');
-        });
+        // Abrir modal de Descargas
+        btnDescargas.onclick = function() {
+            openModal(modalDescargas);
+        }
 
-        // Event listener para cerrar el submenú si se hace clic fuera de él
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.button')) {
-                document.querySelectorAll('.dropdown').forEach(function(dropdown) {
-                    dropdown.classList.remove('active');
-                });
+        // Cerrar modal cuando el usuario haga clic en <span> (x)
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].onclick = function() {
+                closeModal(this.parentElement.parentElement);
             }
-        });
+        }
 
-        // Evita cerrar el submenú si se hace clic dentro de él
-        document.querySelectorAll('.dropdown').forEach(function(dropdown) {
-            dropdown.addEventListener('click', function(event) {
-                event.stopPropagation();
-            });
-        });
+        // Cerrar modal cuando el usuario haga clic fuera del modal
+        window.onclick = function(event) {
+            if (event.target == modalRedes || event.target == modalDescargas) {
+                closeModal(event.target);
+            }
+        }
+        
     </script>
 </body>
 </html>
