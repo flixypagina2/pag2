@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../peliculas/style.css">
+    <link rel="stylesheet" href="../css/estilosP.css">
+    <link rel="stylesheet" href="../css/acordeon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <title>flixy - play </title>
+    <style>
+        #banner{
+				background-image: url('https://image.tmdb.org/t/p/original/jFStxLCwn0508wv4Na95JEbddUK.jpg'); 
+			}
+        /* Estilos para la barra de navegación */
+        .header {
+            background-color: #0e0d0d;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .logo {
+            flex: 1; /* Para ocupar todo el espacio restante */
+            text-align: center; /* Para centrar el contenido */
+        }
+
+        .logo img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        .secciones-btn {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Estilos para el buscador */
+        .search-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: width 0.4s ease-in-out;
+            width: 0;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        .search-container:hover .search-input {
+            width: 200px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* Estilos para el menú */
+        .menu-container {
+            display: none;
+            position: fixed;
+            top: 0; /* Ajuste necesario */
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            
+        }
+
+        .menu-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(36, 33, 33, 0.308);
+            backdrop-filter: blur(5px); /* Ajuste necesario */
+            z-index: -1; /* Ajuste necesario */
+        }
+
+        .menu-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000000e5;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000; /* Asegura que el menú esté por encima del fondo */
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #e50914;
+        }
+        .oculto {
+            display: none;
+        }
+        .button {
+                display: inline-block;
+                cursor: pointer;
+                border-radius: 10px;
+                padding: 10px 20px;
+                background-color: #ffffffd4;
+                color: #000000;
+                border: none;
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: uppercase;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <main>            
+        <div class="content-all">
+            <header class="header">
+                <button class="secciones-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <a href="../../inicio.html"><img src="../img/logo-pagina---icons.gif" alt="Logo de películas"></a>
+                </div>
+               
+            </header>
+
+            <!-- Mobile Menu Container -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-background" onclick="toggleMenu()"></div>
+                <div class="menu-content">
+                    <ul class="menu">
+                        <li><a href="../Series.html">volver</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menuContainer");
+            menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+        }
+    </script>
+</body>
+</html>>
+
+		<!-- Banner -->
+		<div class="banner" id="banner">
+			
+			<div class="banner-contenedor">
+				<center><h1 class="banner-titulo"> Ahsoka </h1>
+
+				<div class="botones">
+					720 <button class="hd"> HD</button>
+				</div>
+
+				<div class="banner-sinopsis">
+                    Ambientada después de la caída del Imperio, la serie sigue al antiguo caballero Jedi mientras investiga una amenaza que se cierne sobre la galaxia.
+
+
+				</div></center>
+			</div>
+
+			<div class="banner-fadeBottom"></div>
+		</div>
+
+		 <!--Acordeon--> 
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<!-- Contenedor -->
+		<ul id="accordion" class="accordion">
+			<li> <!--class="default open"-->
+				<div class="link"><i class="fas fa-play"></i>Temporada 1<i class="fa fa-chevron-down"></i></div>
+				<ul class="submenu">
+                    
+					<center><br><div class="button" onclick="window.location.href='https://uii.io/RFFXM'">Descargar T1 </div></center>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/r2nbhh6i736y')">Capitulo 1</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/o0iys18ykz9s')">Capitulo 2</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/0f3uomn2x5hz')">Capitulo 3</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/sfl7ap0w2m05')">Capitulo 4</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/6o3z0nli46ne')">Capitulo 5</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/c6dt34xgdoqw')">Capitulo 6</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/6bwxu6e2q6cm')">Capitulo 7</a></li>
+                    <li><a href="#" onclick="playVideo('https://wishonly.site/e/bj871jeq5tj2')">Capitulo 8</a></li>
+				</ul>
+			</li>
+		</ul>
+
+		<script src="../js/jquery-3.6.0.min.js"></script>
+		<script src="../js/main.js"></script>
+		<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+	</body>
+        
+	
+ <!-- Contenedor del reproductor en pantalla completa -->
+ <div class="fullscreen-player" id="fullscreen-player">
+    <div class="video-container">
+        <span class="close-button" onclick="closeFullscreenPlayer()">cerrar</span>
+        <iframe id="chapter-player" src="" scrolling="no" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" sandbox="allow-scripts" poster="data:"></iframe>
+    </div>
+</div>
+
+        <!-- Script para el comportamiento del botón de reproducción y cierre del reproductor -->
+        <script>
+            // Función para reproducir el video en el reproductor en pantalla completa
+            function playVideo(videoUrl) {
+                var player = document.getElementById('chapter-player');
+                player.src = videoUrl;
+                openFullscreenPlayer();
+            }
+    
+            // Función para mostrar el reproductor en pantalla completa
+            function openFullscreenPlayer() {
+                var fullscreenPlayer = document.getElementById('fullscreen-player');
+                fullscreenPlayer.style.display = 'block';
+            }
+    
+            // Función para cerrar el reproductor en pantalla completa
+            function closeFullscreenPlayer() {
+                var fullscreenPlayer = document.getElementById('fullscreen-player');
+                fullscreenPlayer.style.display = 'none';
+                var player = document.getElementById('chapter-player');
+                player.src = ''; // Detener la reproducción del video
+            }
+    
+            // Función para alternar la visibilidad del contenido del acordeón
+            function toggleAccordion(element) {
+                var submenu = element.nextElementSibling;
+                submenu.classList.toggle("oculto");
+                var chevron = element.querySelector(".fa-chevron-down");
+                chevron.classList.toggle("rotate");
+            }
+    
+            // Función para mostrar y ocultar el menú móvil
+            function toggleMenu() {
+                var menuContainer = document.getElementById("menuContainer");
+                menuContainer.style.display = menuContainer.style.display === "none" || menuContainer.style.display === "" ? "block" : "none";
+            }
+        </script>
+    
+    
+    <!-- Script para el comportamiento del botón de reproducción y cierre del reproductor -->
+    <script>
+        // Función para reproducir el video en el reproductor en pantalla completa
+        function playVideo(videoUrl) {
+            var player = document.getElementById('chapter-player');
+            player.src = videoUrl;
+            openFullscreenPlayer();
+        }
+
+        // Función para mostrar el reproductor en pantalla completa
+        function openFullscreenPlayer() {
+            var fullscreenPlayer = document.getElementById('fullscreen-player');
+            fullscreenPlayer.style.display = 'block';
+        }
+
+        // Función para cerrar el reproductor en pantalla completa
+        function closeFullscreenPlayer() {
+            var fullscreenPlayer = document.getElementById('fullscreen-player');
+            fullscreenPlayer.style.display = 'none';
+            var player = document.getElementById('chapter-player');
+            player.src = ''; // Detener la reproducción del video
+        }
+    </script>
+<div>
+</body>
+</html>
