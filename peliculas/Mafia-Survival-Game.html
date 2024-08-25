@@ -54,20 +54,19 @@
 
 		<style type="text/css"> 
 			#banner{
-				background-image: url('https://image.tmdb.org/t/p/original/87IVlclAfWL6mdicU1DDuxdwXwe.jpg'); 
-                margin-top: 40px;
+				background-image: url('https://image.tmdb.org/t/p/original/kBwIVFNA8ja8ioR6tN9zsdp8kLB.jpg'); 
 			}		
 		</style>
 	</head>
 	<body>
 		<div class="banner" id="banner">
 			<div class="banner-contenedor">
-				<center><h1 class="banner-titulo">  Dune: Parte dos   </h1>
+				<center><h1 class="banner-titulo"> Mafia Survival Game </h1>
 				<div class="botones">
-					1080  <button class="hd"> HD  
+					1080 <button class="hd"> HD </button>
 				</div>
 				<div class="banner-sinopsis">
-                    Sigue el viaje mítico de Paul Atreides mientras se une a Chani y los Fremen en una guerra de venganza contra los conspiradores que destruyeron a su familia. 
+                    La acción tiene lugar en un futuro lejano. En Moscú tiene lugar el programa de televisión más popular del mundo, en el que once personas se reunirán para descubrir quién es civil y quién es un mafioso.
 
 				</div></center>
 			</div>
@@ -79,10 +78,10 @@
 		 <div class="video-contenedor">
 			<center>
 				<div class="descarga">
-                    
-					<button type="button" class="btn-descarga" onclick="playVideo('https://playerwish.com/e/mg38funritcq')"><i class=""></i>Ver película
+					<button type="button" class="btn-descarga" onclick="playVideo('https://playerwish.com/e/99bu7j27i04s')">
+						<i class=""></i>Ver película
 					</button>
-                    <button type="button" class="btn-descarga" onclick="window.location.href='https://uii.io/NsG3m'"> Descargar
+                    <button type="button" class="btn-descarga" onclick="window.location.href='https://uii.io/1fKzRs3nNPv'"> Descargar
 					</button>
 				</div>
 				
@@ -92,14 +91,14 @@
 
 		<script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
- <!-- Contenedor del reproductor en pantalla completa -->
- <div class="fullscreen-player" id="fullscreen-player">
-    <div class="video-container">
-        <span class="close-button" onclick="closeFullscreenPlayer()">cerrar</span>
-        <iframe id="chapter-player" src="" scrolling="no" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" sandbox="allow-scripts" poster="data:"></iframe>
+       <!-- Contenedor del reproductor en pantalla completa -->
+     <div class="fullscreen-player" id="fullscreen-player">
+        <div class="video-container">
+            <span class="close-button" onclick="closeFullscreenPlayer()">cerrar</span>
+            <iframe id="chapter-player" src="" scrolling="no" frameborder="0" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  poster="data:" ></iframe>
+        </div>
     </div>
-</div>
-
+    
     
     <!-- Script para el comportamiento del botón de reproducción y cierre del reproductor -->
     <script>
@@ -123,6 +122,17 @@
             var player = document.getElementById('chapter-player');
             player.src = ''; // Detener la reproducción del video
         }
+        // Función para detectar la apertura del panel de desarrollador y redirigir a google.com
+        (function() {
+            const threshold = 160;
+            const detectDevTools = function() {
+                if (window.outerHeight - window.innerHeight > threshold ||
+                    window.outerWidth - window.innerWidth > threshold) {
+                    window.location.href = 'https://www.google.com';
+                }
+            };
+            setInterval(detectDevTools, 1000);
+        })();
     </script>
 	<div>
 
