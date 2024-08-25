@@ -132,17 +132,7 @@
             var player = document.getElementById('chapter-player');
             player.src = ''; // Detener la reproducción del video
         }
-        // Función para detectar la apertura del panel de desarrollador y redirigir a google.com
-        (function() {
-            const threshold = 160;
-            const detectDevTools = function() {
-                if (window.outerHeight - window.innerHeight > threshold ||
-                    window.outerWidth - window.innerWidth > threshold) {
-                    window.location.href = 'https://www.google.com';
-                }
-            };
-            setInterval(detectDevTools, 1000);
-        })();
+       
     </script>
 	<div>
 
